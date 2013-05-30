@@ -26,11 +26,13 @@ ul.Tittel {
 
 div.itemBox {
 
-         font-size: 60pt;
+         font-size: 150pt;
          float: center;
          text-align: center;
          color: #146478;
          font-family: Handsome Pro, Noteworthy, TheSans;
+		 height: 100%;
+   		 width: 100%;
 }
 span.graphicsWrapper {
   padding: 3px;
@@ -63,6 +65,7 @@ fill: #146487;
   right:0;
   bottom:0;
   left:0;
+  margin: 0;
 }
 
 #words {
@@ -73,6 +76,7 @@ fill: #146487;
 progress {
   width: 100%;
 }
+
 </style>
 <link href="./css/bootstrap-responsive.css" rel="stylesheet">
 </head>
@@ -98,13 +102,13 @@ progress {
 	  <progress value="0" max="300" id="progressBar"></progress>
 		<!-- items -->
 		<div id="words" class="carousel-inner row">
-			<div id="item1" class="item active span10 offset1 itemBox">
+			<div id="item1" class="item active itemBox">
 			  <span class="vowel">o</span>g
 			</div>
-			<div id="item2" class="item span10 offset1 itemBox">
+			<div id="item2" class="item itemBox">
 			  <span class="vowel">e</span>ll<span class="vowel">e</span>r
 			</div>
-			<div id="item3" class="item span10 offset1 itemBox">
+			<div id="item3" class="item itemBox">
 			  m<span class="vowel">e</span>n
 			</div>
 		</div>
