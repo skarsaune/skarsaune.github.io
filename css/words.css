@@ -1,0 +1,69 @@
+
+button.rowButton {
+  background-color: #146478;
+  color: white;
+  padding: 0;
+  margin: 0;
+  spacing: 0;
+  align: bottom;
+  display: table-cell;
+  width: 10%;
+}
+body {
+  background-image:url('../img/1920x1200_terje.jpg');
+}
+ul.Tittel {
+    font-size: 14pt;
+    font-weight: bold;
+}
+
+div.itemBox {
+
+         font-size: 150pt;
+         float: center;
+         text-align: center;
+         color: #146478;
+         font-family: Handsome Pro, Noteworthy, TheSans;
+		 height: 100%;
+   		 width: 100%;
+}
+
+
+#buttonRow {
+  height: 20%;
+  display: table;
+  width: 100%;
+  align: right;
+  margin-left: 0;
+}
+span.vowel {
+   color: #d2a055;
+}
+
+polygon {
+ fill: white;
+}
+
+svg {
+/*position: absolute;*/
+fill: #146487;
+}
+
+#myCarousel {
+  position:fixed !important;
+  position:absolute;
+  top:0;
+  right:0;
+  bottom:0;
+  left:0;
+  margin: 0;
+}
+
+#words {
+   width: 100%;
+   height: 85%;
+}
+
+progress {
+  width: 100%;
+}
