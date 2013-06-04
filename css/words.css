@@ -44,6 +44,10 @@ polygon {
  fill: white;
 }
 
+.buttonImage {
+ fill: white;
+}
+
 svg {
 /*position: absolute;*/
 fill: #146487;
