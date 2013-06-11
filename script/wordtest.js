@@ -37,12 +37,40 @@
 	    return document.height + screen.availHeight - screen.height;
 	}
 	
+	function setupToggleButtons(){
+	    var vowelButton=document.getElementById('vowelButton');
+	    var vowelStyle=findStyle('words', 'span.vowel');
+	    createStyleToggle(vowelButton, vowelStyle, 'color')
+	    vowelButton.onclick();
+	    vowelButton.onclick();
+	}
+	
+	function createStyleToggle(button, style, attribute){
+	    // if either button or style is not found abort
+	    if(!button || !style) {
+		return;
+	    }
+	    var state=true;
+	    var value=style.getPropertyValue(attribute);
+	    button.onclick= function(){
+		if(state) {
+		    style.removeProperty(attribute);
+		    state = false;
+		}
+		else {
+		    style.setProperty(attribute, value, "important");
+		    state = true;
+		}
+	    }
+	}
+	
 
 	// Within your document ready function,
 	// Do an initial size of words
 	$(document).ready(function(){
 			    sizeWordsToWindow();
 			    sizeButtonsToWindow();
+			    setupToggleButtons();
   	});
 	// Resize words on window resize
 	jQuery(window).resize(function() {
