@@ -2,8 +2,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ordtrening</title>
+<meta name="author" content="martin.skarsaune@kantega.no">
+
 <link href="./css/bootstrap.css" rel="stylesheet">
 <style>
 </style>
@@ -24,12 +26,10 @@
 	  
 	
 	<script src="./script/underscore.min.js" type="text/javascript"></script>
-	<script src="./script/backbone.min.js" type="text/javascript"></script>
-	<script src="./script/backbone-syphon.js" type="text/javascript"></script>
 	<script src="./script/wordtest.js" type="text/javascript"></script>
 
 
-	<div id="myCarousel" class="carousel slide">
+	<div id="myCarousel" class="carousel slide handwriting">
 		<progress value="0" max="300" id="progressBar"></progress>
 		<!-- items -->
 		<div id="words" class="carousel-inner row">
@@ -37,7 +37,7 @@
 				<span class="vowel">o</span>g
 			</div>
 			<div id="item2" class="item itemBox">
-				<span class="vowel">e</span>ll<span class="vowel">e</span>r
+				<span class="vowel">e</span>l<span class="syllableSeparator">-</span>l<span class="vowel">e</span>r
 			</div>
 			<div id="item3" class="item itemBox">
 				m<span class="vowel">e</span>n
@@ -46,19 +46,14 @@
 		<!-- Carousel nav -->
 		<a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
 		<a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
-		<ol class="carousel-indicators offset7 span1">
-			<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-			<li data-target="#myCarousel" data-slide-to="1"></li>
-			<li data-target="#myCarousel" data-slide-to="2"></li>
-		</ol>
 		<div id="buttonRow" class="row">
 			<button type="button" id="vowelButton" class="rowButton"
 				title="fargelegg vokaler">
 				<span class="vowel">a</span>b
 			</button>
 			<button type="button" id="syllableButton" class="rowButton"
-				title="del i stavelser" style="font-size: smaller">sta-ve</button>
-			<button type="button" id="randomButton" class="rowButton"
+				title="del i stavelser"><span class="vowel">a</span><span class="syllableSeparator">-</span>v</button>
+			<button type="button" id="shuffleButton" class="rowButton"
 				title="Vis ord i tilfeldig rekkefølge">
 				<span class="graphicsWrapper"> <svg aria-label="start"
 						xmlns="http://www.w3.org/2000/svg" version="1.1"
@@ -76,9 +71,9 @@
 						</svg>
 				</span>
 				</button>
-			<button type="button" id="fontButton" class="rowButton" title="font">a</button>
+			<button type="button" id="fontButton" class="rowButton" title="font"><span class="vowel">a</span></button>
 			<button type="button" id="languageButton" class="rowButton"
-				title="spill av ordet som lyd">
+				title="språk">
 				<svg xmlns="http://www.w3.org/2000/svg" version="1.1"
 					viewBox="0 0 110 80" role="img" aria-text="språk"> 
 					<title>språk</title><rect width="110" height="80"
@@ -87,14 +82,17 @@
 					height="80" x="35" fill="#002868" /> <rect width="110" height="10"
 					y="35" fill="#002868" /> </svg>
 			</button>
-			<button type="button" id="controlButton" class="rowButton"
+			<button type="button" id="controlButton" class="rowButton off"
 				title="start og stopp">
 				<span class="graphicsWrapper"> <svg aria-label="start"
 						xmlns="http://www.w3.org/2000/svg" version="1.1"
 						viewBox="0 0 20 20"> 
 						<title>start</title>
 						<polygon points="4,4 16,10 4,16 4,4"
-						class="buttonImage" /> </svg>
+						class="buttonImage off" />
+						<rect x="6" y="4" width="3" height="12" class="buttonImage on" />
+						<rect x="11" y="4" width="3" height="12" class="buttonImage on" />
+						 </svg>
 				</span>
 			</button>
 			<button type="button" id="helpButton" class="rowButton"
@@ -106,16 +104,15 @@
 						xmlns="http://www.w3.org/2000/svg" version="1.1"
 						viewBox="0 0 20 20"> 
 						<title>instillinger</title>
-						<polygon
-						points="2,9 2,11 18,11 18,9 2,9" class="buttonImage"
-						transform="rotate(30,10,10)" /> <polygon
-						points="2,9 2,11 18,11 18,9 2,9" class="buttonImage"
-						transform="rotate(90,10,10)" /> <polygon
-						points="2,9 2,11 18,11 18,9 2,9" class="buttonImage"
-						transform="rotate(150,10,10)" /> <circle cx="10" cy="10" r="6"
-						class="buttonImage" /> <circle cx="10" cy="10" r="5" /> <circle
-						cx="10" cy="10" r="4" class="buttonImage" /> <circle cx="10"
-						cy="10" r="2" /> </svg>
+						<rect x="9" y="2" width="2" height="16" class="buttonImage"/>
+						<rect x="9" y="2" width="2" height="16" transform="rotate(36,10,10)" class="buttonImage"/>
+						<rect x="9" y="2" width="2" height="16" transform="rotate(72,10,10)" class="buttonImage"/>
+						<rect x="9" y="2" width="2" height="16" transform="rotate(108,10,10)" class="buttonImage"/>
+						<rect x="9" y="2" width="2" height="16" transform="rotate(144,10,10)" class="buttonImage"/>
+						<circle cx="10" cy="10" r="6" 
+						class="buttonImage" /> <circle
+						cx="10" cy="10" r="4" stroke="black" stroke-linecap="round" stroke-width="2" stroke-dasharray="3,5" fill="none"/> 
+						<circle cx="10" cy="10" r="2" fill="black"/> </svg>
 				</span>
 			</button>
 			<button type="button" id="soundButton" class="rowButton"
@@ -129,15 +126,20 @@
 				</span>
 				
 				</button>
-			<button type="button" id="fullscreenButton" class="rowButton"
+			<button type="button" id="fullscreenButton" class="rowButton off"
 				title="Vis i fullskjerm"><span class="graphicsWrapper"> <svg role="img" aria-label="fullskjerm"
 						xmlns="http://www.w3.org/2000/svg" version="1.1"
-						viewBox="0 0 30 20">
+						viewBox="0 0 20 20">
 						<title>fullskjerm</title> 
-						<polygon points="4,0 0,4 0,0 4,0" class="buttonImage"/>
-						<polygon points="4,0 0,4 0,0 4,0" class="buttonImage" transform="rotate(180,15,10)"/>
-						<polygon points="4,20 0,16 0,20 4,20" class="buttonImage" />
-						<polygon points="4,20 0,16 0,20 4,20" class="buttonImage" transform="rotate(180,15,10)"/> 
+						<polygon points="0,7 0,0 7,0, 5,2 9,6 6,9 2,5 0,7" class="buttonImage off"/>
+						<polygon points="0,7 0,0 7,0, 5,2 9,6 6,9 2,5 0,7" class="buttonImage off" transform="rotate(90,10,10)"/>
+						<polygon points="0,7 0,0 7,0, 5,2 9,6 6,9 2,5 0,7" class="buttonImage off" transform="rotate(180,10,10)"/>
+						<polygon points="0,7 0,0 7,0, 5,2 9,6 6,9 2,5 0,7" class="buttonImage off" transform="rotate(270,10,10)"/>
+						<polygon points="9,2 9,9 2,9, 4,7 0,3 3,0 7,4 9,2" class="buttonImage on"/>
+						<polygon points="9,2 9,9 2,9, 4,7 0,3 3,0 7,4 9,2" class="buttonImage on" transform="rotate(90,10,10)"/>
+						<polygon points="9,2 9,9 2,9, 4,7 0,3 3,0 7,4 9,2" class="buttonImage on" transform="rotate(180,10,10)"/>
+						<polygon points="9,2 9,9 2,9, 4,7 0,3 3,0 7,4 9,2" class="buttonImage on" transform="rotate(270,10,10)"/>
+						
 				</span></button>
 
 

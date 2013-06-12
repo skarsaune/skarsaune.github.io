@@ -41,8 +41,38 @@
 	    var vowelButton=document.getElementById('vowelButton');
 	    var vowelStyle=findStyle('words', 'span.vowel');
 	    createStyleToggle(vowelButton, vowelStyle, 'color')
-	    vowelButton.onclick();
-	    vowelButton.onclick();
+	    var syllableButton=document.getElementById('syllableButton');
+	    var syllableSeparator=findStyle('words', 'span.syllableSeparator');
+	    createStyleToggle(syllableButton, syllableSeparator, 'display');
+	    //simulate one click in order to reinstate separator 
+	    syllableButton.onclick();
+	    var fontButton=document.getElementById('fontButton');
+	    var carouselContainer=document.getElementById('myCarousel');
+	    createStyleClassCarousel(fontButton, carouselContainer, ['handwriting', 'print', 'printCaps']);
+	    var controlButton=document.getElementById('controlButton');
+	    createStyleClassCarousel(controlButton, controlButton, ['off', 'on']);
+	    var shuffleButton=document.getElementById('shuffleButton');
+	    createStyleClassCarousel(shuffleButton, shuffleButton, ['off', 'on']);
+	    var soundButton=document.getElementById('soundButton');
+	    createStyleClassCarousel(soundButton, soundButton, ['off', 'on']);
+	    var fullscreenButton=document.getElementById('fullscreenButton');
+	    createStyleClassCarousel(fullscreenButton, fullscreenButton, ['off', 'on']);
+	    
+	    
+	}
+	
+	function createStyleClassCarousel(button, container, styles){
+	    if(!button || !container || styles.length === 0) {
+		return;
+	    }
+	    var index=0;
+	    button.onclick=function(){
+		//remove the former style
+		container.classList.remove(styles[index]);
+		index=++index%styles.length;
+		//apply the style at next index
+		container.classList.add(styles[index]);
+	    }
 	}
 	
 	function createStyleToggle(button, style, attribute){
@@ -62,6 +92,25 @@
 		    state = true;
 		}
 	    }
+	}
+	
+	function createControlToggle(button, toggleOnAction, toggleOffAction) {
+	    createStyleClassCarousel(button, button, ['off', 'on']);
+//	    
+//	    var state=false;
+//	    button.onclick=function() {
+//		if(state) {
+//		    button.classList.remove('on');
+//		    button.classList.add('off');
+//		    toggleOffAction();
+//		}
+//		else
+//		{
+//		    button.classList.remove('off');
+//		    button.classList.add('on');
+//		    toggleOnAction();
+//		}
+//	    }
 	}
 	
 
