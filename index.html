@@ -29,7 +29,7 @@
 	<script src="./script/wordtest.js" type="text/javascript"></script>
 
 
-	<div id="myCarousel" class="carousel slide handwriting">
+	<div id="myCarousel" class="carousel slide handwriting ">
 		<progress value="0" max="300" id="progressBar"></progress>
 		<!-- items -->
 		<div id="words" class="carousel-inner row">
@@ -44,29 +44,32 @@
 			</div>
 		</div>
 		<!-- Carousel nav -->
-		<a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
-		<a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+		<a class="carousel-control left" id="leftArrow" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+		<a class="carousel-control right" id="rightArrow" href="#myCarousel" data-slide="next">&rsaquo;</a>
 		<div id="buttonRow" class="row">
 			<button type="button" id="vowelButton" class="rowButton"
 				title="fargelegg vokaler">
 				<span class="vowel">a</span>b
 			</button>
 			<button type="button" id="syllableButton" class="rowButton"
-				title="del i stavelser"><span class="vowel">a</span><span class="syllableSeparator">-</span>v</button>
+				title="del i stavelser"><span class="buttonTextWrapper"><span class="vowel">a</span><span class="syllableSeparator">-</span>v</span></button>
 			<button type="button" id="shuffleButton" class="rowButton"
 				title="Vis ord i tilfeldig rekkefølge">
 				<span class="graphicsWrapper"> <svg aria-label="start"
 						xmlns="http://www.w3.org/2000/svg" version="1.1"
 						viewBox="0 0 24 16"> 
 						<title>shuffle</title>
-						<polygon points="2,2 7,2 11,6 9,8 6,4 2,4 2,2"
-						class="buttonImage" /> 
+						<polygon points="2,2 7,2 10,6 8,8 6,4 2,4 2,2"
+						class="buttonImage on" /> 
 						
 						<polygon points="2,14 7,14 17,4 18,4 18,5 21,3 18,1 18,2 16,2 6,12 2,12 2,14"
-						class="buttonImage" /> 
+						class="buttonImage on" /> 
 						
 						<polygon points="14,9 17,12 18,12 18,11 21,13 18,15 18,14 16,14 12,11 14,9"
-						class="buttonImage" />
+						class="buttonImage on" />
+						
+						<polygon points="2,2 18,2 18,1 21,3 18,5 18,4 2,4 2,2" class="buttonImage off"/>
+						<polygon points="2,12 18,12 18,11 21,13 18,15 18,14 2,14 2,12" class="buttonImage off"/>
 						
 						</svg>
 				</span>
@@ -82,7 +85,7 @@
 					height="80" x="35" fill="#002868" /> <rect width="110" height="10"
 					y="35" fill="#002868" /> </svg>
 			</button>
-			<button type="button" id="controlButton" class="rowButton off"
+			<button type="button" id="controlButton" class="rowButton"
 				title="start og stopp">
 				<span class="graphicsWrapper"> <svg aria-label="start"
 						xmlns="http://www.w3.org/2000/svg" version="1.1"
@@ -90,8 +93,8 @@
 						<title>start</title>
 						<polygon points="4,4 16,10 4,16 4,4"
 						class="buttonImage off" />
-						<rect x="6" y="4" width="3" height="12" class="buttonImage on" />
-						<rect x="11" y="4" width="3" height="12" class="buttonImage on" />
+						<rect x="5" y="4" width="3" height="12" class="buttonImage on" />
+						<rect x="12" y="4" width="3" height="12" class="buttonImage on" />
 						 </svg>
 				</span>
 			</button>
@@ -103,7 +106,7 @@
 				<span class="graphicsWrapper"> <svg role="img" aria-label="instillinger"
 						xmlns="http://www.w3.org/2000/svg" version="1.1"
 						viewBox="0 0 20 20"> 
-						<title>instillinger</title>
+						<title>innstillinger</title>
 						<rect x="9" y="2" width="2" height="16" class="buttonImage"/>
 						<rect x="9" y="2" width="2" height="16" transform="rotate(36,10,10)" class="buttonImage"/>
 						<rect x="9" y="2" width="2" height="16" transform="rotate(72,10,10)" class="buttonImage"/>
@@ -119,14 +122,20 @@
 				title="spill av ordet som lyd">
 							<span class="graphicsWrapper"> <svg role="img" aria-label="lyd"
 						xmlns="http://www.w3.org/2000/svg" version="1.1"
-						viewBox="0 0 20 20">
+						viewBox="0 0 24 20">
 						<title>lyd</title> 
 						<polygon
-						points="4,6 4,14 10,14 16,18 16,2 10,6 4,6" class="buttonImage"/> 
+						points="4,6 4,14 10,14 16,18 16,2 10,6 4,6" class="buttonImage"/>
+						
+						<line x1="1" y1="1" x2="23" y2="19" class="strikeout off"/>
+						
+						<path d="M18,6 19,8 19,12 T18,14" class="buttonLine on" />
+						
+						<path d="M21,4 23,8 23,12 T21,16" class="buttonLine on" /> 
 				</span>
 				
 				</button>
-			<button type="button" id="fullscreenButton" class="rowButton off"
+			<button type="button" id="fullscreenButton" class="rowButton"
 				title="Vis i fullskjerm"><span class="graphicsWrapper"> <svg role="img" aria-label="fullskjerm"
 						xmlns="http://www.w3.org/2000/svg" version="1.1"
 						viewBox="0 0 20 20">

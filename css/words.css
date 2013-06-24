@@ -1,94 +1,160 @@
-
 button.rowButton {
-  background-color: transparent;
-  padding: 0;
-  margin: 0;
-  spacing: 0;
-  align: bottom;
-  display: table-cell;
-  width: 10%;
-  font: normal;
+	background-color: transparent;
+	padding: 0;
+	margin: 0;
+	spacing: 0;
+	align: bottom;
+	display: table-cell;
+	width: 10%;
+	font: normal;
+}
+
+div.mainElement {
+	display: block;
+}
+
+div.fullScreen {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	z-index: 900;
 }
 
 .off .on {
 	fill: none;
+	stroke: none;
+}
+
+.on {
+	fill: none;
+	stroke: none;
+}
+
+#leftArrow {
+	line-height: 45px;
+}
+
+#rightArrow {
+	line-height: 45px;
 }
 
 .on .off {
 	fill: none;
+	stroke: none;
+}
+
+.on .on {
+	fill: #146478;
+	stroke: #146478;
 }
 
 body {
-  background-image:url('../img/1920x1200_terje.jpg');
-  color: #146478;
-  
+	background-image: url('../img/1920x1200_terje.jpg');
+	color: #146478;
 }
+
+button {
+	color: #146478;
+}
+
 ul.Tittel {
-    font-size: 14pt;
-    font-weight: bold;
+	font-size: 14pt;
+	font-weight: bold;
 }
 
 div.itemBox {
-
-         font-size: 150pt;
-         float: center;
-         text-align: center;
-		 height: 100%;
-   		 width: 100%;
+	font-size: 150pt;
+	float: center;
+	text-align: center;
+	height: 100%;
+	width: 100%;
 }
-
 
 #buttonRow {
-  height: 20%;
-  display: table;
-  width: 100%;
-  align: right;
-  margin-left: 0;
+	height: 20%;
+	display: table;
+	width: 100%;
+	align: right;
+	margin-left: 0;
 }
+
 span.vowel {
-   color: #d2a055;
+	color: #d2a055;
 }
 
 svg {
-/*position: absolute;*/
-fill: #146487;
+	fill: #146478;
+	stroke: #146478;
+}
+
+path.buttonLine {
+	stroke: none;
+	stroke-width: 2px;
+}
+
+line.strikeout {
+	stroke: #c87328;
+	stroke-width: 3px;
 }
 
 #myCarousel {
-  position:fixed !important;
-  position:absolute;
-  top:0;
-  right:0;
-  bottom:0;
-  left:0;
-  margin: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	margin: 0;
 }
 
 div.handwriting {
-         font-family: Handsome Pro, Noteworthy;
+	font-family: Handsome Pro, Noteworthy;
 }
 
 div.handwritingCaps {
-         font-family: Handsome Pro, Noteworthy;
-         text-transform: uppercase;
+	font-family: Handsome Pro, Noteworthy;
+	text-transform: uppercase;
 }
 
 div.print {
-	font-family: TheSans, Sans Serif, MS Sans Serif, MS Reference Sans Serif,PF Sans, sans-serif;
+	font-family: TheSans, Sans Serif, MS Sans Serif, MS Reference Sans Serif,
+		PF Sans, sans-serif;
 }
 
 div.printCaps {
-	font-family: TheSans, Sans Serif, MS Sans Serif, MS Reference Sans Serif,PF Sans, sans-serif;
+	font-family: TheSans, Sans Serif, MS Sans Serif, MS Reference Sans Serif,
+		PF Sans, sans-serif;
+	text-transform: uppercase;
+}
+
+div.handwriting button{
+	font-family: Handsome Pro, Noteworthy;
+}
+
+div.handwritingCaps button {
+	font-family: Handsome Pro, Noteworthy;
+	text-transform: uppercase;
+}
+
+div.print button{
+	font-family: TheSans, Sans Serif, MS Sans Serif, MS Reference Sans Serif,
+		PF Sans, sans-serif;
+}
+
+div.printCaps button{
+	font-family: TheSans, Sans Serif, MS Sans Serif, MS Reference Sans Serif,
+		PF Sans, sans-serif;
 	text-transform: uppercase;
 }
 
 #words {
-   width: 100%;
-   height: 85%;
+	width: 100%;
+	height: 85%;
 }
 
 progress {
-  width: 100%;
+	width: 100%;
 }
 
 span.syllableSeparator {
