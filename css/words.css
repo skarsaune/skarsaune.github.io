@@ -51,10 +51,20 @@ div.fullScreen {
 	stroke: #146478;
 }
 
+div.hiddenDiv {
+	z-order: 1000;
+	display: none;
+}
 body {
 	background-image: url('../img/1920x1200_terje.jpg');
 	color: #146478;
 }
+
+body:-webkit-full-screen	{ width: 100% }
+body:-moz-full-screen		{ width: 100% }
+body:-ms-full-screen		{ width: 100% }
+body:-o-full-screen			{ width: 100% }
+body:full-screen			{ width: 100% }
 
 button {
 	color: #146478;

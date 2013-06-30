@@ -55,7 +55,11 @@ function setupToggleButtons() {
     createStyleClassCarousel(fontButton, carouselContainer, [ 'handwriting',
 	    'print', 'printCaps' ]);
     var controlButton = document.getElementById('controlButton');
-    createStyleClassCarousel(controlButton, controlButton, [ 'off', 'on' ]);
+    toggleFunction(controlButton, function() {
+	$('.carousel').carousel('cycle');
+    }, function() {
+	$('.carousel').carousel('pause');
+    });
     var shuffleButton = document.getElementById('shuffleButton');
     createStyleClassCarousel(shuffleButton, shuffleButton, [ 'off', 'on' ]);
     var soundButton = document.getElementById('soundButton');

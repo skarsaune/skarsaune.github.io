@@ -140,10 +140,10 @@
 						xmlns="http://www.w3.org/2000/svg" version="1.1"
 						viewBox="0 0 20 20">
 						<title>fullskjerm</title> 
-						<polygon points="0,7 0,0 7,0, 5,2 9,6 6,9 2,5 0,7" class="buttonImage off"/>
-						<polygon points="0,7 0,0 7,0, 5,2 9,6 6,9 2,5 0,7" class="buttonImage off" transform="rotate(90,10,10)"/>
-						<polygon points="0,7 0,0 7,0, 5,2 9,6 6,9 2,5 0,7" class="buttonImage off" transform="rotate(180,10,10)"/>
-						<polygon points="0,7 0,0 7,0, 5,2 9,6 6,9 2,5 0,7" class="buttonImage off" transform="rotate(270,10,10)"/>
+						<polygon points="0,5 0,0 5,0, 3,2 7,6 6,7 2,3 0,5" class="buttonImage off"/>
+						<polygon points="0,5 0,0 5,0, 3,2 7,6 6,7 2,3 0,5" class="buttonImage off" transform="rotate(90,10,10)"/>
+						<polygon points="0,5 0,0 5,0, 3,2 7,6 6,7 2,3 0,5" class="buttonImage off" transform="rotate(180,10,10)"/>
+						<polygon points="0,5 0,0 5,0, 3,2 7,6 6,7 2,3 0,5" class="buttonImage off" transform="rotate(270,10,10)"/>
 						<polygon points="9,2 9,9 2,9, 4,7 0,3 3,0 7,4 9,2" class="buttonImage on"/>
 						<polygon points="9,2 9,9 2,9, 4,7 0,3 3,0 7,4 9,2" class="buttonImage on" transform="rotate(90,10,10)"/>
 						<polygon points="9,2 9,9 2,9, 4,7 0,3 3,0 7,4 9,2" class="buttonImage on" transform="rotate(180,10,10)"/>
@@ -153,6 +153,25 @@
 
 
 		</div>
+	</div>
+	
+	<div id="settings" class="hiddenDiv">
+		<span>Fra ord nummer</span><input type="range" id="startSlider" class="slider"/><input id="startValue" type="text" size="3" class="sliderValue"/><span id="startWord"></span>
+		<br>
+		<span>Til ord nummer</span><input type="range" id="endSlider" class="slider"/><input id="endValue" type="text" size="3" class="sliderValue"/><span id="endWord"></span>
+		<br>
+		<span>Hastighet (sekunder)</span><input type="range" id="speedSlider" min="1" max="5" class="slider"/><input id="speedValue" type="text" size="1" class="sliderValue"/><span id="speed">sekunder</span>
+		<br>
+		<button id="saveSettings">Lagre</button><button id="cancelSettings">Avbryt</button>
+	</div>
+	
+	
+	<div id="help" class="hiddenDiv">
+	    <h1>Hjelp og informasjon</h1>
+	    
+	    
+	    
+		<button id="saveSettings">Tilbake</button>
 	</div>
 
 
