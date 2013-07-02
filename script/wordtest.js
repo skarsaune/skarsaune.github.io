@@ -64,6 +64,16 @@ function setupToggleButtons() {
     createStyleClassCarousel(shuffleButton, shuffleButton, [ 'off', 'on' ]);
     var soundButton = document.getElementById('soundButton');
     createStyleClassCarousel(soundButton, soundButton, [ 'off', 'on' ]);
+    var settingsButton = document.getElementById('settingsButton');
+    var settingsPage = document.getElementById('settings');
+    settingsButton.onclick = function() {
+	settingsPage.classList.remove('hidden');
+    };
+    var helpButton = document.getElementById('helpButton');
+    var helpPage = document.getElementById('help');
+    helpButton.onclick = function() {
+	helpPage.classList.remove('hidden');
+    };
     var fullscreenButton = document.getElementById('fullscreenButton');
     toggleFunction(fullscreenButton, function() {
 	document.body.webkitRequestFullScreen();

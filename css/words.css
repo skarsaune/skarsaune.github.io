@@ -51,11 +51,14 @@ div.fullScreen {
 	stroke: #146478;
 }
 
-div.hiddenDiv {
-	z-order: 1000;
+div.hidden {
 	display: none;
 }
-body {
+
+div.visible {
+	display: block;
+}
+.cover {
 	background-image: url('../img/1920x1200_terje.jpg');
 	color: #146478;
 }
@@ -110,12 +113,17 @@ line.strikeout {
 	stroke-width: 3px;
 }
 
-#myCarousel {
+div.fillSpace {
 	top: 0;
 	right: 0;
 	bottom: 0;
 	left: 0;
 	margin: 0;
+}
+
+div.inFront {
+	z-order: 1000;
+	position: absolute;
 }
 
 div.handwriting {
