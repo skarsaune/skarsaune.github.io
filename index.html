@@ -156,11 +156,11 @@
 	</div>
 	
 	<div id="settings" class="hidden fillSpace inFront cover">
-		<span class="prompt">Fra ord nummer</span><input type="range" id="startSlider" class="slider"/><input type="number" name="startValue"  size="3" class="sliderValue" min="1" max="300" step="10"/><span id="startWord" class="informationLabel"></span>
+		<span class="prompt">Fra ord nummer</span><input type="range" id="startSlider" value="1" class="slider"/><input type="number" name="startValue"  size="3" class="sliderValue" min="1" max="300" step="10"/><span id="startWord" class="informationLabel"></span>
 		<br>
-		<span class="prompt">Til ord nummer</span><input type="range" id="endSlider" class="slider"/><input id="endValue" type="number" size="3" class="sliderValue" min="1" max="300" step="10" class="sliderValue"/><span id="endWord" class="informationLabel"></span>
+		<span class="prompt">Til ord nummer</span><input type="range" id="endSlider" value="300" class="slider"/><input id="endValue" type="number" size="3" class="sliderValue" min="1" max="300" step="10" class="sliderValue"/><span id="endWord" class="informationLabel"></span>
 		<br>
-		<span class="prompt">Hastighet (sekunder)</span><input type="range" id="speedSlider" min="1" max="5" class="slider"/><input type="number" id="speedValue" name="speedValue"  size="1" max="5" min="1" step="1" class="sliderValue"/><span id="speed" class="informationLabel">sekunder</span>
+		<span class="prompt">Hastighet</span><input type="range" id="speedSlider" min="1" max="5" value="3" class="slider"/><input type="number" id="speedValue" name="speedValue"  size="1" max="5" min="1" step="1" class="sliderValue"/><span id="speed" class="informationLabel">sekunder</span>
 		<br>
 		<button id="saveSettings" onclick="document.getElementById('settings').classList.add('hidden');">Lagre</button><button id="cancelSettings" onclick="document.getElementById('settings').classList.add('hidden');">Avbryt</button>
 	</div>

@@ -185,23 +185,23 @@ span.syllableSeparator {
 span.prompt {
 	width: 30%;
 	display: inline-block;
-	padding: 10px;
+	margin: 10px;
 }
 
-range {
+input.slider {
 	width: 40%;
 	display: inline-block;
-	padding: 10px;
+	margin: 10px;
 }
 
-number {
-	width: 5 %;
+input.sliderValue {
+	width: 4%;
 	display: inline-block;
-	padding: 10px;
+	margin: 10px;
 }
 
 span.informationLabel {
-	width: 25%;
+	width: 15%;
 	display: inline-block;
-	padding: 10px;
+	margin: 10px;
 }
