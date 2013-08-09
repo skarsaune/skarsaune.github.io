@@ -77,21 +77,17 @@ function setupToggleButtons() {
 	this.lastWord = 0;
 	this.currentIndex = 0;
 
+	this.setWords = setWords;
 	function setWords(newWords) {
 	    this.words = newWords;
-	    this.firstWord = 1;
+	    this.firstWord = 0;
 	    this.lastWord = this.words.length - 1;
 	    this.currentIndex = this.firstWord;
 	}
 
-	function toggleShuffle() {
-	    this.shuffle = !this.shuffle;
-	}
-	function toggleSound() {
-	    this.sound = !this.sound;
-	}
 	function initSettings() {
 	}
+	this.updateSettings = updateSettings;
 	function updateSettings() {
 	    this.interval = document.getElementById('startSlider').value();
 	    this.firstWord = document.getElementById('endSlider').value();
@@ -101,6 +97,7 @@ function setupToggleButtons() {
 	    }
 	    hideSettingsPage();
 	}
+	this.getWord = getWord;
 	function getWord(index) {
 	    return this.words[index];
 	}
@@ -108,85 +105,91 @@ function setupToggleButtons() {
     var wordSettings = new wordSettings();
 
     wordSettings.loadWords = function() {
-	$.getScript('script/' + this.language + '/words.js').done(
+	$.getScript('script/' + wordSettings.language + '/words.js').done(
 		function(script, textstatus) {
 		    var words = getAllWords();
 		    setMaxLenght(words);
 		    wordSettings.setWords(words);
 		}).fail(function(jqxhr, settings, exception) {
-	    setWords([])
+	    wordSettings.setWords([]);
 	});
+    };
+    wordSettings.toggleShuffle = function() {
+	wordSettings.shuffle = !wordSettings.shuffle;
+    };
 
-	wordSettings.loadWords();
+    wordSettings.toggleSound = function() {
+	wordSettings.sound = !wordSettings.sound;
+    };
+    wordSettings.loadWords();
 
-	var vowelButton = document.getElementById('vowelButton');
-	var vowelStyle = findStyle('words', 'span.vowel');
-	createStyleToggle(vowelButton, vowelStyle, 'color')
-	var syllableButton = document.getElementById('syllableButton');
-	var syllableSeparator = findStyle('words', 'span.syllableSeparator');
-	createStyleToggle(syllableButton, syllableSeparator, 'display');
-	// simulate one click in order to reinstate separator
-	syllableButton.onclick();
-	var fontButton = document.getElementById('fontButton');
-	var carouselContainer = document.getElementById('myCarousel');
-	createStyleClassCarousel(fontButton, carouselContainer, [
-		'handwriting', 'print', 'printCaps' ]);
-	var controlButton = document.getElementById('controlButton');
-	toggleFunction(controlButton, function() {
-	    $('.carousel').carousel('cycle');
-	}, function() {
-	    $('.carousel').carousel('pause');
-	});
-	var shuffleButton = document.getElementById('shuffleButton');
-	toggleFunction(shuffleButton, wordSettings.toggleShuffle,
-		wordSettings.toggleShuffle);
-	var soundButton = document.getElementById('soundButton');
-	toggleFunction(soundButton, wordSettings.toggleSound,
-		wordSettings.toggleSound);
-	var settingsButton = document.getElementById('settingsButton');
-	var settingsPage = document.getElementById('settings');
-	settingsButton.onclick = function() {
-	    settingsPage.classList.remove('hidden');
-	};
-	var helpButton = document.getElementById('helpButton');
-	var helpPage = document.getElementById('help');
-	helpButton.onclick = function() {
-	    helpPage.classList.remove('hidden');
-	};
-	var fullscreenButton = document.getElementById('fullscreenButton');
-	toggleFunction(fullscreenButton, function() {
-	    document.body.webkitRequestFullScreen();
-	}, function() {
-	    document.webkitCancelFullScreen();
-	});
+    var vowelButton = document.getElementById('vowelButton');
+    var vowelStyle = findStyle('words', 'span.vowel');
+    createStyleToggle(vowelButton, vowelStyle, 'color')
+    var syllableButton = document.getElementById('syllableButton');
+    var syllableSeparator = findStyle('words', 'span.syllableSeparator');
+    createStyleToggle(syllableButton, syllableSeparator, 'display');
+    // simulate one click in order to reinstate separator
+    syllableButton.onclick();
+    var fontButton = document.getElementById('fontButton');
+    var carouselContainer = document.getElementById('myCarousel');
+    createStyleClassCarousel(fontButton, carouselContainer, [ 'handwriting',
+	    'print', 'printCaps' ]);
+    var controlButton = document.getElementById('controlButton');
+    toggleFunction(controlButton, function() {
+	$('.carousel').carousel('cycle');
+    }, function() {
+	$('.carousel').carousel('pause');
+    });
+    var shuffleButton = document.getElementById('shuffleButton');
+    toggleFunction(shuffleButton, wordSettings.toggleShuffle,
+	    wordSettings.toggleShuffle);
+    var soundButton = document.getElementById('soundButton');
+    toggleFunction(soundButton, wordSettings.toggleSound,
+	    wordSettings.toggleSound);
+    var settingsButton = document.getElementById('settingsButton');
+    var settingsPage = document.getElementById('settings');
+    settingsButton.onclick = function() {
+	settingsPage.classList.remove('hidden');
+    };
+    var helpButton = document.getElementById('helpButton');
+    var helpPage = document.getElementById('help');
+    helpButton.onclick = function() {
+	helpPage.classList.remove('hidden');
+    };
+    var fullscreenButton = document.getElementById('fullscreenButton');
+    toggleFunction(fullscreenButton, function() {
+	document.body.webkitRequestFullScreen();
+    }, function() {
+	document.webkitCancelFullScreen();
+    });
 
-	// Handle settings page
-	var startSlider = document.getElementById('startSlider');
-	var startValue = document.getElementById('startValue');
-	var startWord = document.getElementById('startWord')
-	var endSlider = document.getElementById('endSlider');
-	var endValue = document.getElementById('endValue');
-	var endWord = document.getElementById('endWord')
+    // Handle settings page
+    var startSlider = document.getElementById('startSlider');
+    var startValue = document.getElementById('startValue');
+    var startWord = document.getElementById('startWord')
+    var endSlider = document.getElementById('endSlider');
+    var endValue = document.getElementById('endValue');
+    var endWord = document.getElementById('endWord')
 
-	var onStartChange = function(value) {
-	    // end must be equal or greater than
-	    if (value > endSlider.value) {
-		endSlider.value = value;
-	    }
-	    startWord.innerHTML = '(' + wordSettings.getWord(value) + ')';
-	};
-	synchronize(startSlider, startValue, onStartChange);
+    var onStartChange = function(value) {
+	// end must be equal or greater than
+	if (value > endSlider.value) {
+	    endSlider.value = value;
+	}
+	startWord.innerHTML = '(' + wordSettings.getWord(value) + ')';
+    };
+    synchronize(startSlider, startValue, onStartChange);
 
-	var onEndChange = function(value) {
-	    // start must be equal or less than
-	    if (value < startSlider.value) {
-		startSlider.value = value;
-	    }
-	    endWord.innerHTML = '(' + wordSettings.getWord(value) + ')';
-	};
-	synchronize(endSlider, endValue, onEndChange);
+    var onEndChange = function(value) {
+	// start must be equal or less than
+	if (value < startSlider.value) {
+	    startSlider.value = value;
+	}
+	endWord.innerHTML = '(' + wordSettings.getWord(value) + ')';
+    };
+    synchronize(endSlider, endValue, onEndChange);
 
-    }
 }
 
 function isVowel(character) {
