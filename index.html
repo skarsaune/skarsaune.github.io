@@ -33,13 +33,13 @@
 		<progress value="0" max="300" id="progressBar"></progress>
 		<!-- items -->
 		<div id="words" class="carousel-inner row">
-			<div id="item1" class="item active itemBox">
+			<div id="item0" class="item active itemBox">
 				<span class="vowel">o</span>g
 			</div>
-			<div id="item2" class="item itemBox">
+			<div id="item1" class="item itemBox">
 				<span class="vowel">e</span>l<span class="syllableSeparator">-</span>l<span class="vowel">e</span>r
 			</div>
-			<div id="item3" class="item itemBox">
+			<div id="item2" class="item itemBox">
 				m<span class="vowel">e</span>n
 			</div>
 		</div>
@@ -174,9 +174,9 @@
 		<br>
 		<span class="prompt">Til ord nummer</span><input type="range" id="endSlider" value="300" class="slider"/><input id="endValue" type="number" size="3" class="sliderValue" min="1" max="100" step="10" class="sliderValue"/><span id="endWord" class="informationLabel"></span>
 		<br>
-		<span class="prompt">Hastighet</span><input type="range" id="speedSlider" min="1" max="5" value="3" class="slider"/><input type="number" id="speedValue" name="speedValue"  size="1" max="5" min="1" step="1" class="sliderValue"/><span id="speed" class="informationLabel">sekunder</span>
+		<span class="prompt">Hastighet</span><input type="range" id="speedSlider" min="1" max="5" value="3" class="slider"/><input type="number" id="speedValue" size="1" max="5" min="1" step="1" class="sliderValue"/><span id="speed" class="informationLabel">sekunder</span>
 		<br>
-		<button id="saveSettings" onclick="document.getElementById('settings').classList.add('hidden');">Lagre</button><button id="cancelSettings" onclick="document.getElementById('settings').classList.add('hidden');">Avbryt</button>
+		<button id="saveSettings" >Lagre</button><button id="cancelSettings" onclick="hideSettingsPage();">Avbryt</button>
 	</div>
 	
 	

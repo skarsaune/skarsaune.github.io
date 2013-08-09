@@ -49,6 +49,9 @@ function calculateWidth() {
 function hideSettingsPage() {
     document.getElementById('settings').classList.add('hidden');
 }
+function showSettingsPage() {
+    document.getElementById('settings').classList.remove('hidden');
+}
 
 /*
  * Adjust the lenght of longest word if any of the words is longer than the
@@ -77,21 +80,44 @@ function setupToggleButtons() {
 	this.lastWord = 0;
 	this.currentIndex = 0;
 
+	this.initSettings=initSettings;
+	function initSettings() {
+	    var max=this.words.length;
+	    var step=max / 10;
+	    if(step == 0) {
+		step=1;
+	    }
+	    document.getElementById('startSlider').value= this.firstWord+1;
+	    document.getElementById('startValue').value= this.firstWord+1;
+	    document.getElementById('startSlider').setAttribute("max", max);
+	    document.getElementById('startValue').setAttribute("max", max);
+	    document.getElementById('startValue').setAttribute("step", step);
+	    
+	    document.getElementById('endSlider').value= this.lastWord+1;
+	    document.getElementById('endValue').value= this.lastWord+1;
+	    document.getElementById('endSlider').setAttribute("max",max);
+	    document.getElementById('endValue').setAttribute("max",max);
+	    document.getElementById('endValue').setAttribute("step",step);
+	    
+	    document.getElementById('speedSlider').value=this.interval;
+	    document.getElementById('speedValue').value=this.interval;
+	    
+	}
+
 	this.setWords = setWords;
 	function setWords(newWords) {
 	    this.words = newWords;
 	    this.firstWord = 0;
 	    this.lastWord = this.words.length - 1;
 	    this.currentIndex = this.firstWord;
+	    this.initSettings();
 	}
 
-	function initSettings() {
-	}
 	this.updateSettings = updateSettings;
 	function updateSettings() {
-	    this.interval = document.getElementById('startSlider').value();
-	    this.firstWord = document.getElementById('endSlider').value();
-	    this.interval = document.getElementById('speedSlider').value() * 1000;
+	    this.firstWord = document.getElementById('startSlider').value - 1;
+	    this.lastWord = document.getElementById('endSlider').value - 1;
+	    this.interval = document.getElementById('speedSlider').value;
 	    if (this.currentIndex < this.firstWord) {
 		this.currentIndex = this.firstWord;
 	    }
@@ -101,6 +127,7 @@ function setupToggleButtons() {
 	function getWord(index) {
 	    return this.words[index];
 	}
+	
     }
     var wordSettings = new wordSettings();
 
@@ -177,7 +204,7 @@ function setupToggleButtons() {
 	if (value > endSlider.value) {
 	    endSlider.value = value;
 	}
-	startWord.innerHTML = '(' + wordSettings.getWord(value) + ')';
+	startWord.innerHTML = '(' + wordSettings.getWord(value-1) + ')';
     };
     synchronize(startSlider, startValue, onStartChange);
 
@@ -186,9 +213,12 @@ function setupToggleButtons() {
 	if (value < startSlider.value) {
 	    startSlider.value = value;
 	}
-	endWord.innerHTML = '(' + wordSettings.getWord(value) + ')';
+	endWord.innerHTML = '(' + wordSettings.getWord(value-1) + ')';
     };
     synchronize(endSlider, endValue, onEndChange);
+    
+    var saveSettingsButton = document.getElementById('saveSettings');
+    saveSettingsButton.onclick=wordSettings.updateSettings;
 
 }
 
