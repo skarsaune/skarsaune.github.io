@@ -99,7 +99,21 @@
 				</span>
 			</button>
 			<button type="button" id="helpButton" class="rowButton"
-				title="hjelp">?</button>
+				title="hjelp"><span class="graphicsWrapper"> <svg role="img" aria-label="hjelp"
+						xmlns="http://www.w3.org/2000/svg" version="1.1"
+						viewBox="0 0 20 20"> 
+						<title>hjelp</title>
+						<circle
+						cx="10" cy="10" r="7" stroke="white" stroke-width="4" fill="none"/>
+						<rect x="9" y="1" width="2" height="4" fill="red" stroke="none"/>
+						<rect x="9" y="1" width="2" height="4" fill="red" stroke="none" transform="rotate(45,10,10)"/>
+						<rect x="9" y="1" width="2" height="4" fill="red" stroke="none" transform="rotate(90,10,10)"/>
+						<rect x="9" y="1" width="2" height="4" fill="red" stroke="none" transform="rotate(135,10,10)"/>
+						<rect x="9" y="1" width="2" height="4" fill="red" stroke="none" transform="rotate(180,10,10)"/>
+						<rect x="9" y="1" width="2" height="4" fill="red" stroke="none" transform="rotate(225,10,10)"/>
+						<rect x="9" y="1" width="2" height="4" fill="red" stroke="none" transform="rotate(270,10,10)"/>
+						<rect x="9" y="1" width="2" height="4" fill="red" stroke="none" transform="rotate(315,10,10)"/>
+				</span></button>
 
 			<button type="button" id="settingsButton" class="rowButton"
 				title="instillinger">
@@ -156,9 +170,9 @@
 	</div>
 	
 	<div id="settings" class="hidden fillSpace inFront cover">
-		<span class="prompt">Fra ord nummer</span><input type="range" id="startSlider" value="1" class="slider"/><input type="number" name="startValue"  size="3" class="sliderValue" min="1" max="300" step="10"/><span id="startWord" class="informationLabel"></span>
+		<span class="prompt">Fra ord nummer</span><input type="range" id="startSlider" value="1" class="slider"/><input type="number" id="startValue"  size="3" class="sliderValue" min="1" max="100" step="10"/><span id="startWord" class="informationLabel"></span>
 		<br>
-		<span class="prompt">Til ord nummer</span><input type="range" id="endSlider" value="300" class="slider"/><input id="endValue" type="number" size="3" class="sliderValue" min="1" max="300" step="10" class="sliderValue"/><span id="endWord" class="informationLabel"></span>
+		<span class="prompt">Til ord nummer</span><input type="range" id="endSlider" value="300" class="slider"/><input id="endValue" type="number" size="3" class="sliderValue" min="1" max="100" step="10" class="sliderValue"/><span id="endWord" class="informationLabel"></span>
 		<br>
 		<span class="prompt">Hastighet</span><input type="range" id="speedSlider" min="1" max="5" value="3" class="slider"/><input type="number" id="speedValue" name="speedValue"  size="1" max="5" min="1" step="1" class="sliderValue"/><span id="speed" class="informationLabel">sekunder</span>
 		<br>

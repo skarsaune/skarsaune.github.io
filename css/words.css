@@ -186,6 +186,7 @@ span.prompt {
 	width: 30%;
 	display: inline-block;
 	margin: 10px;
+	font-size: 24pt;
 }
 
 input.slider {
@@ -204,4 +205,5 @@ span.informationLabel {
 	width: 15%;
 	display: inline-block;
 	margin: 10px;
+	font-size: 24pt;
 }
