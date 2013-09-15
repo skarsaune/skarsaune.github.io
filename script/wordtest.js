@@ -65,7 +65,24 @@ function setMaxLenght(anArray) {
     }
 }
 
+function encodeWord(word){
+    var codeString='';
+    for(var i=0;i<word.length;i++) {
+	if(('' + word[i]).match('/[aeiouyæøå]/')){
+	    codeString+='<span class="vowel">' + word[i] + '</span>';
+	}
+	else if(word[i] == '-') {
+	    codeString+='<span class="syllableSeparator">-</span>'
+	}
+	else
+	    codeString += word[i];
+    }
+    return codeString;
+}
+
 function setupToggleButtons() {
+    
+    
 
     /*
      * Initialize non word settings with default values
@@ -79,6 +96,7 @@ function setupToggleButtons() {
 	this.firstWord = 0;
 	this.lastWord = 0;
 	this.currentIndex = 0;
+	this.carouselItems = document.getElementsByClassName('item');
 
 	this.initSettings=initSettings;
 	function initSettings() {
@@ -101,6 +119,12 @@ function setupToggleButtons() {
 	    
 	    document.getElementById('speedSlider').value=this.interval;
 	    document.getElementById('speedValue').value=this.interval;
+	    
+	    for(var i=0;i<this.carouselItems.length; i++){
+		this.carouselItems[i].innerHTML =encodeWord(this.words[this.currentIndex+i]);
+	    }
+	    
+	    
 	    
 	}
 
@@ -130,6 +154,8 @@ function setupToggleButtons() {
 	
     }
     var wordSettings = new wordSettings();
+    
+    $('.carousel').on()
 
     wordSettings.loadWords = function() {
 	$.getScript('script/' + wordSettings.language + '/words.js').done(
