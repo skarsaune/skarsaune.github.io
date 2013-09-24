@@ -65,24 +65,21 @@ function setMaxLenght(anArray) {
     }
 }
 
-function encodeWord(word){
-    var codeString='';
-    for(var i=0;i<word.length;i++) {
-	if(('' + word[i]).match('/[aeiouyæøå]/')){
-	    codeString+='<span class="vowel">' + word[i] + '</span>';
-	}
-	else if(word[i] == '-') {
-	    codeString+='<span class="syllableSeparator">-</span>'
-	}
-	else
+function encodeWord(word) {
+    var codeString = '';
+    for ( var i = 0; i < word.length; i++) {
+	if ("aeiouyæøå".indexOf(word[i]) != -1) {
+	    codeString += '<span class="vowel">' + word[i] + '</span>';
+	} else if (word[i] == '-') {
+	    codeString += '<span class="syllableSeparator">-</span>'
+	} else
 	    codeString += word[i];
     }
     return codeString;
 }
 
 function setupToggleButtons() {
-    
-    
+    var controlButton = document.getElementById('controlButton');
 
     /*
      * Initialize non word settings with default values
@@ -96,36 +93,38 @@ function setupToggleButtons() {
 	this.firstWord = 0;
 	this.lastWord = 0;
 	this.currentIndex = 0;
+	this.carouselIndex = 0;
 	this.carouselItems = document.getElementsByClassName('item');
 
-	this.initSettings=initSettings;
+	this.initSettings = initSettings;
 	function initSettings() {
-	    var max=this.words.length;
-	    var step=max / 10;
-	    if(step == 0) {
-		step=1;
+	    var max = this.words.length;
+	    var step = max / 10;
+	    if (step == 0) {
+		step = 1;
 	    }
-	    document.getElementById('startSlider').value= this.firstWord+1;
-	    document.getElementById('startValue').value= this.firstWord+1;
+	    document.getElementById('startSlider').value = this.firstWord + 1;
+	    document.getElementById('startValue').value = this.firstWord + 1;
 	    document.getElementById('startSlider').setAttribute("max", max);
 	    document.getElementById('startValue').setAttribute("max", max);
 	    document.getElementById('startValue').setAttribute("step", step);
+
+	    document.getElementById('endSlider').value = this.lastWord + 1;
+	    document.getElementById('endValue').value = this.lastWord + 1;
+	    document.getElementById('endSlider').setAttribute("max", max);
+	    document.getElementById('endValue').setAttribute("max", max);
+	    document.getElementById('endValue').setAttribute("step", step);
+
+	    document.getElementById('speedSlider').value = this.interval;
+	    document.getElementById('speedValue').value = this.interval;
 	    
-	    document.getElementById('endSlider').value= this.lastWord+1;
-	    document.getElementById('endValue').value= this.lastWord+1;
-	    document.getElementById('endSlider').setAttribute("max",max);
-	    document.getElementById('endValue').setAttribute("max",max);
-	    document.getElementById('endValue').setAttribute("step",step);
-	    
-	    document.getElementById('speedSlider').value=this.interval;
-	    document.getElementById('speedValue').value=this.interval;
-	    
-	    for(var i=0;i<this.carouselItems.length; i++){
-		this.carouselItems[i].innerHTML =encodeWord(this.words[this.currentIndex+i]);
+	    document.getElementById('progressBar').setAttribute("max", max);
+
+	    for ( var i = 0; i < this.carouselItems.length; i++) {
+		this.carouselItems[i].innerHTML = encodeWord(this.words[this.currentIndex
+			+ i]);
 	    }
-	    
-	    
-	    
+
 	}
 
 	this.setWords = setWords;
@@ -151,11 +150,30 @@ function setupToggleButtons() {
 	function getWord(index) {
 	    return this.words[index];
 	}
-	
+
+	this.slid = slid;
+	function slid(event) {
+	    var delta = 1;
+        if(event.direction == "right"){
+            delta = -1;
+        }
+        
+        
+	    wordSettings.currentIndex+=delta;
+	    document.getElementById('progressBar').value = wordSettings.currentIndex;
+	    if (wordSettings.currentIndex == wordSettings.words.length) {
+		controlButton.click();
+	    } else {
+		wordSettings.carouselIndex = (wordSettings.carouselIndex + delta)
+			% wordSettings.carouselItems.length;
+		wordSettings.carouselItems[wordSettings.carouselIndex].innerHTML = encodeWord(wordSettings
+			.getWord(wordSettings.currentIndex));
+	    }
+	}
     }
     var wordSettings = new wordSettings();
-    
-    $('.carousel').on()
+
+    $('.carousel').on('slide', wordSettings.slid);
 
     wordSettings.loadWords = function() {
 	$.getScript('script/' + wordSettings.language + '/words.js').done(
@@ -188,7 +206,6 @@ function setupToggleButtons() {
     var carouselContainer = document.getElementById('myCarousel');
     createStyleClassCarousel(fontButton, carouselContainer, [ 'handwriting',
 	    'print', 'printCaps' ]);
-    var controlButton = document.getElementById('controlButton');
     toggleFunction(controlButton, function() {
 	$('.carousel').carousel('cycle');
     }, function() {
@@ -230,7 +247,7 @@ function setupToggleButtons() {
 	if (value > endSlider.value) {
 	    endSlider.value = value;
 	}
-	startWord.innerHTML = '(' + wordSettings.getWord(value-1) + ')';
+	startWord.innerHTML = '(' + wordSettings.getWord(value - 1) + ')';
     };
     synchronize(startSlider, startValue, onStartChange);
 
@@ -239,12 +256,12 @@ function setupToggleButtons() {
 	if (value < startSlider.value) {
 	    startSlider.value = value;
 	}
-	endWord.innerHTML = '(' + wordSettings.getWord(value-1) + ')';
+	endWord.innerHTML = '(' + wordSettings.getWord(value - 1) + ')';
     };
     synchronize(endSlider, endValue, onEndChange);
-    
+
     var saveSettingsButton = document.getElementById('saveSettings');
-    saveSettingsButton.onclick=wordSettings.updateSettings;
+    saveSettingsButton.onclick = wordSettings.updateSettings;
 
 }
 
