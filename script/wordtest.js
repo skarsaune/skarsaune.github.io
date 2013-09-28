@@ -90,6 +90,7 @@ function setupToggleButtons() {
 	this.language = "no_NO";
 	this.sound = false;
 	this.words = [];
+	this.shuffledIndex = [];
 	this.firstWord = 0;
 	this.lastWord = 0;
 	this.currentIndex = 0;
@@ -130,9 +131,24 @@ function setupToggleButtons() {
 	this.setWords = setWords;
 	function setWords(newWords) {
 	    this.words = newWords;
+	    
 	    this.firstWord = 0;
 	    this.lastWord = this.words.length - 1;
 	    this.currentIndex = this.firstWord;
+	    this.shuffledIndex = new Array();
+	    for ( var i = 0; i < this.words.length; i++) {
+		this.shuffledIndex[i] = i;
+	    }
+	    
+	    for ( var i = 0; i <= (this.shuffledIndex.length / 2); i++) {
+		var firstIndex = Math.floor(Math.random() * this.shuffledIndex.length);
+		var secondIndex = Math.floor(Math.random() * this.shuffledIndex.length);
+		var temp = this.shuffledIndex[firstIndex];
+		this.shuffledIndex[firstIndex]=this.shuffledIndex[secondIndex];
+		this.shuffledIndex[secondIndex] = temp;
+	    }
+
+	    
 	    this.initSettings();
 	}
 
@@ -148,7 +164,10 @@ function setupToggleButtons() {
 	}
 	this.getWord = getWord;
 	function getWord(index) {
-	    return this.words[index];
+	    if(this.shuffle)
+		return this.words[this.shuffledIndex[index]];
+	    else
+		return this.words[index];
 	}
 
 	this.slid = slid;
