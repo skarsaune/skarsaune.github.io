@@ -1,24 +1,32 @@
 var wordStyle = null;
 var maxLenght = 10;
 
+function wordSizeFactor()
+{
+    return Math.min(calculateHeight() , (calculateWidth() * 3) / maxLenght);
+}
+
 function sizeWordsToWindow() {
     if (wordStyle == null) {
 	wordStyle = findStyle("words", "div.itemBox");
     }
+    
+    var sizeFactor=wordSizeFactor();
+    
     wordStyle.setProperty("font-size",
-	    parseInt(calculateHeight() / 1.3) + "px", "important");
-    wordStyle.setProperty("line-height", calculateHeight() + "px", "important");
+	    parseInt(sizeFactor / 1.3) + "px", "important");
+    wordStyle.setProperty("line-height", sizeFactor + "px", "important");
 }
 
 var buttonStyle = null;
 function sizeButtonsToWindow() {
-    var height = calculateHeight();
+    var sizeFactor=wordSizeFactor();
     if (!buttonStyle) {
 	buttonStyle = findStyle("words", "button.rowButton");
     }
-    buttonStyle.setProperty("font-size", parseInt(height / 10) + "px",
+    buttonStyle.setProperty("font-size", parseInt(sizeFactor / 8) + "px",
 	    "important");
-    buttonStyle.setProperty("height", parseInt(height / 9) + "px", "important");
+    buttonStyle.setProperty("height", parseInt(sizeFactor / 7) + "px", "important");
 
 }
 
