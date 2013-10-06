@@ -61,7 +61,7 @@ function sizeWordsToWindow() {
 
     wordStyle.setProperty("font-size", parseInt(sizeFactor / 1.3) + "px",
 	    "important");
-    wordStyle.setProperty("line-height", sizeFactor + "px", "important");
+    wordStyle.setProperty("line-height", calculateHeight() + "px", "important");
 }
 
 var buttonStyle = null;
