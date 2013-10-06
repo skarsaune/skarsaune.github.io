@@ -140,7 +140,7 @@ function setupToggleButtons() {
      * Initialize non word settings with default values
      */
     function wordSettings() {
-	this.interval = 3000;
+	this.interval = 3;
 	this.shuffle = false;
 	this.language = "no_NO";
 	this.sound = false;
@@ -213,6 +213,8 @@ function setupToggleButtons() {
 	    this.firstWord = document.getElementById('startSlider').value - 1;
 	    this.lastWord = document.getElementById('endSlider').value - 1;
 	    this.interval = document.getElementById('speedSlider').value;
+	    var inMillis = this.interval * 1000;
+	    $('.carousel').carousel({ interval: inMillis });
 	    if (this.currentIndex < this.firstWord) {
 		this.currentIndex = this.firstWord;
 	    }
@@ -360,6 +362,8 @@ function setupToggleButtons() {
 	endWord.innerHTML = '(' + wordSettings.getWord(value - 1) + ')';
     };
     synchronize(endSlider, endValue, onEndChange);
+    
+    synchronize(document.getElementById('speedSlider'), document.getElementById('speedValue'), function(value){});
 
     var saveSettingsButton = document.getElementById('saveSettings');
     saveSettingsButton.onclick = wordSettings.updateSettings;
