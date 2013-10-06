@@ -1,32 +1,79 @@
 var wordStyle = null;
 var maxLenght = 10;
 
-function wordSizeFactor()
-{
-    return Math.min(calculateHeight() , (calculateWidth() * 3) / maxLenght);
+function wordSizeFactor() {
+    return Math.min(calculateHeight(), (calculateWidth() * 3) / maxLenght);
+}
+
+function requestFullscreenFunction() {
+    if (document.body.webkitRequestFullScreen) {
+	return document.body.webkitRequestFullScreen;
+    }
+    if (document.body.mozRequestFullScreen) {
+	return document.body.webkitRequestFullScreen;
+    }
+
+    return document.requestFullscreen;
+
+}
+
+function setupFullscreenCallback(handleFunction) {
+    if (document.body.webkitRequestFullScreen) {
+	document.onwebkitfullscreenchange = function() {
+	    handleFunction(document.webkitCurrentFullScreenElement)
+	};
+    }
+    if (document.body.mozRequestFullScreen) {
+	document.onmozfullscreenchange = function() {
+	    handleFunction(document.mozFullScreenElement)
+	};
+    }
+
+    if (document.requestFullscreen) {
+	document.onfullscreenchange = function() {
+	    handleFunction(document.fullscreenElement)
+	};
+	;
+    }
+
+}
+
+function cancelFullscreen() {
+    if (document.webkitCancelFullScreen) {
+	document.webkitCancelFullScreen();
+    }
+    if (document.mozCancelFullScreen) {
+	document.webkitCancelFullScreen();
+    }
+
+    if(document.exitFullscreen) {
+	document.exitFullscreen();
+    }
+
 }
 
 function sizeWordsToWindow() {
     if (wordStyle == null) {
 	wordStyle = findStyle("words", "div.itemBox");
     }
-    
-    var sizeFactor=wordSizeFactor();
-    
-    wordStyle.setProperty("font-size",
-	    parseInt(sizeFactor / 1.3) + "px", "important");
+
+    var sizeFactor = wordSizeFactor();
+
+    wordStyle.setProperty("font-size", parseInt(sizeFactor / 1.3) + "px",
+	    "important");
     wordStyle.setProperty("line-height", sizeFactor + "px", "important");
 }
 
 var buttonStyle = null;
 function sizeButtonsToWindow() {
-    var sizeFactor=wordSizeFactor();
+    var sizeFactor = wordSizeFactor();
     if (!buttonStyle) {
 	buttonStyle = findStyle("words", "button.rowButton");
     }
     buttonStyle.setProperty("font-size", parseInt(sizeFactor / 8) + "px",
 	    "important");
-    buttonStyle.setProperty("height", parseInt(sizeFactor / 7) + "px", "important");
+    buttonStyle.setProperty("height", parseInt(sizeFactor / 7) + "px",
+	    "important");
 
 }
 
@@ -126,7 +173,7 @@ function setupToggleButtons() {
 
 	    document.getElementById('speedSlider').value = this.interval;
 	    document.getElementById('speedValue').value = this.interval;
-	    
+
 	    document.getElementById('progressBar').setAttribute("max", max);
 
 	    for ( var i = 0; i < this.carouselItems.length; i++) {
@@ -139,7 +186,7 @@ function setupToggleButtons() {
 	this.setWords = setWords;
 	function setWords(newWords) {
 	    this.words = newWords;
-	    
+
 	    this.firstWord = 0;
 	    this.lastWord = this.words.length - 1;
 	    this.currentIndex = this.firstWord;
@@ -147,16 +194,17 @@ function setupToggleButtons() {
 	    for ( var i = 0; i < this.words.length; i++) {
 		this.shuffledIndex[i] = i;
 	    }
-	    
+
 	    for ( var i = 0; i <= (this.shuffledIndex.length / 2); i++) {
-		var firstIndex = Math.floor(Math.random() * this.shuffledIndex.length);
-		var secondIndex = Math.floor(Math.random() * this.shuffledIndex.length);
+		var firstIndex = Math.floor(Math.random()
+			* this.shuffledIndex.length);
+		var secondIndex = Math.floor(Math.random()
+			* this.shuffledIndex.length);
 		var temp = this.shuffledIndex[firstIndex];
-		this.shuffledIndex[firstIndex]=this.shuffledIndex[secondIndex];
+		this.shuffledIndex[firstIndex] = this.shuffledIndex[secondIndex];
 		this.shuffledIndex[secondIndex] = temp;
 	    }
 
-	    
 	    this.initSettings();
 	}
 
@@ -172,7 +220,7 @@ function setupToggleButtons() {
 	}
 	this.getWord = getWord;
 	function getWord(index) {
-	    if(this.shuffle)
+	    if (this.shuffle)
 		return this.words[this.shuffledIndex[index]];
 	    else
 		return this.words[index];
@@ -181,12 +229,11 @@ function setupToggleButtons() {
 	this.slid = slid;
 	function slid(event) {
 	    var delta = 1;
-        if(event.direction == "right"){
-            delta = -1;
-        }
-        
-        
-	    wordSettings.currentIndex+=delta;
+	    if (event.direction == "right") {
+		delta = -1;
+	    }
+
+	    wordSettings.currentIndex += delta;
 	    document.getElementById('progressBar').value = wordSettings.currentIndex;
 	    if (wordSettings.currentIndex == wordSettings.words.length) {
 		controlButton.click();
@@ -255,11 +302,38 @@ function setupToggleButtons() {
 	helpPage.classList.remove('hidden');
     };
     var fullscreenButton = document.getElementById('fullscreenButton');
-    toggleFunction(fullscreenButton, function() {
-	document.body.webkitRequestFullScreen();
-    }, function() {
-	document.webkitCancelFullScreen();
-    });
+    var fullscreenFunction = requestFullscreenFunction();
+    if (fullscreenButton) {
+	var state = false;
+	
+	setupFullscreenCallback(function(fullScreenElement) {
+		if (fullScreenElement) {
+		    fullscreenButton.classList.add('on');
+		    state = true;
+		}
+		else {
+		    fullscreenButton.classList.remove('on');
+		    state = false;
+		}
+		    
+
+	    });
+	if (fullscreenFunction) {
+	    fullscreenButton.onclick = function() {
+
+		if (!state) {
+		    fullscreenFunction.apply(document.body);
+		} else {
+		    cancelFullscreen();
+		}
+
+	    }
+	}
+	else {
+	    fullscreenButton.classList.add('hidden');
+	}
+
+    }
 
     // Handle settings page
     var startSlider = document.getElementById('startSlider');
@@ -291,6 +365,8 @@ function setupToggleButtons() {
     saveSettingsButton.onclick = wordSettings.updateSettings;
 
 }
+
+
 
 function isVowel(character) {
     return false;
@@ -356,25 +432,6 @@ function createStyleToggle(button, style, attribute) {
 	    state = true;
 	}
     }
-}
-
-function createControlToggle(button, toggleOnAction, toggleOffAction) {
-    createStyleClassCarousel(button, button, [ 'off', 'on' ]);
-    //	    
-    // var state=false;
-    // button.onclick=function() {
-    // if(state) {
-    // button.classList.remove('on');
-    // button.classList.add('off');
-    // toggleOffAction();
-    // }
-    // else
-    // {
-    // button.classList.remove('off');
-    // button.classList.add('on');
-    // toggleOnAction();
-    // }
-    // }
 }
 
 // Within your document ready function,
