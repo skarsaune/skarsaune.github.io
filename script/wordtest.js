@@ -10,7 +10,7 @@ function requestFullscreenFunction() {
 	return document.body.webkitRequestFullScreen;
     }
     if (document.body.mozRequestFullScreen) {
-	return document.body.webkitRequestFullScreen;
+	return document.body.mozRequestFullScreen;
     }
 
     return document.requestFullscreen;
@@ -94,11 +94,21 @@ function findStyle(styleSheet, selector) {
 }
 
 function calculateHeight() {
-    return document.height + screen.availHeight - screen.height;
+    return Math.max(
+	        $(document).height(),
+	        $(window).height(),
+	        /* For opera: */
+	        document.documentElement.clientHeight
+	    ) + screen.availHeight - screen.height;
 }
 
 function calculateWidth() {
-    return document.width + screen.availWidth - screen.width;
+    return Math.max(
+	        $(document).width(),
+	        $(window).width(),
+	        /* For opera: */
+	        document.documentElement.clientWidth
+	    )  + screen.availWidth - screen.width;
 }
 
 function hideSettingsPage() {
@@ -214,7 +224,7 @@ function setupToggleButtons() {
 	    this.lastWord = document.getElementById('endSlider').value - 1;
 	    this.interval = document.getElementById('speedSlider').value;
 	    var inMillis = this.interval * 1000;
-	    $('.carousel').carousel({ interval: inMillis });
+	    $('.carousel').carousel({ interval: inMillis} );
 	    if (this.currentIndex < this.firstWord) {
 		this.currentIndex = this.firstWord;
 	    }
