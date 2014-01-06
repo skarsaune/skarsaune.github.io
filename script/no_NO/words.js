@@ -1,3 +1,11 @@
+/*
+ * Licensed under GNU Public License version 3.
+ * http://www.gnu.org/copyleft/gpl.html
+ * Author: martin.skarsaune@kantega.no
+ * 
+ * Norwegian Words provided by Logoped Randi Orten
+ * 
+ * */
 function getAllWords(){
     return [
 	"av",
