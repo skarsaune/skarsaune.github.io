@@ -1,4 +1,10 @@
-button.rowButton {
+/*
+ * Licensed under GNU Public License version 3.
+ * http://www.gnu.org/copyleft/gpl.html
+ * Author: martin.skarsaune@kantega.no
+ * 
+ * */
+ button.rowButton {
 	background-color: transparent;
 	padding: 0;
 	margin: 0;
@@ -59,7 +65,7 @@ div.visible {
 	display: block;
 }
 .cover {
-	background-image: url('../img/1920x1200_terje.jpg');
+	background-image: url('../img/papp.jpg');
 	color: #146478;
 }
 

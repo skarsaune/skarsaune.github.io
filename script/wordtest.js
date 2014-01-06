@@ -1,9 +1,22 @@
+/*
+ * Licensed under GNU Public License version 3.
+ * http://www.gnu.org/copyleft/gpl.html
+ * Author: martin.skarsaune@kantega.no
+ * 
+ * */
+
 var wordStyle = null;
 var maxLenght = 10;
 
 function wordSizeFactor() {
     return Math.min(calculateHeight(), (calculateWidth() * 3) / maxLenght);
 }
+
+function hasAudioSupport() {
+	var audioPlayer=document.getElementById('player');
+	return !!(audioPlayer.canPlayType && audioPlayer.canPlayType('audio/mpeg;').replace(/no/, ''));
+}
+
 
 function requestFullscreenFunction() {
     if (document.body.webkitRequestFullScreen) {
@@ -33,7 +46,6 @@ function setupFullscreenCallback(handleFunction) {
 	document.onfullscreenchange = function() {
 	    handleFunction(document.fullscreenElement)
 	};
-	;
     }
 
 }
@@ -49,6 +61,8 @@ function cancelFullscreen() {
     if(document.exitFullscreen) {
 	document.exitFullscreen();
     }
+    sizeButtonsToWindow();
+    sizeWordsToWindow();
 
 }
 
@@ -130,10 +144,14 @@ function setMaxLenght(anArray) {
     }
 }
 
+
 function encodeWord(word) {
+    if(!word) {
+	return "";
+    }
     var codeString = '';
     for ( var i = 0; i < word.length; i++) {
-	if ("aeiouyæøå".indexOf(word[i]) != -1) {
+	if ("aeiouy".indexOf(word[i]) != -1 || word[i] === 'æ' || word[i] === 'ø' || word[i] === 'å') {
 	    codeString += '<span class="vowel">' + word[i] + '</span>';
 	} else if (word[i] == '-') {
 	    codeString += '<span class="syllableSeparator">-</span>'
@@ -174,13 +192,16 @@ function setupToggleButtons() {
 	    document.getElementById('startSlider').setAttribute("max", max);
 	    document.getElementById('startValue').setAttribute("max", max);
 	    document.getElementById('startValue').setAttribute("step", step);
+	    document.getElementById('startSlider').setAttribute("step", step);
 
 	    document.getElementById('endSlider').value = this.lastWord + 1;
 	    document.getElementById('endValue').value = this.lastWord + 1;
 	    document.getElementById('endSlider').setAttribute("max", max);
 	    document.getElementById('endValue').setAttribute("max", max);
 	    document.getElementById('endValue').setAttribute("step", step);
+	    document.getElementById('endSlider').setAttribute("step", step);
 
+	    
 	    document.getElementById('speedSlider').value = this.interval;
 	    document.getElementById('speedValue').value = this.interval;
 
@@ -217,6 +238,21 @@ function setupToggleButtons() {
 
 	    this.initSettings();
 	}
+	
+	this.playWordSound = playWordSound;
+	function playWordSound() {
+	    var audio = $('.player'); 
+	    var word = this.getWord(this.currentIndex);
+	    audio[0].setAttribute("src", "media/" + this.language + "/" + word + ".mp3"  );
+	    /** ************* */
+	    audio[0].pause();
+	    audio[0].load();
+	    audio[0].play();
+	    /** ************* */
+	}
+
+	
+	
 
 	this.updateSettings = updateSettings;
 	function updateSettings() {
@@ -238,14 +274,15 @@ function setupToggleButtons() {
 		return this.words[index];
 	}
 
-	this.slid = slid;
-	function slid(event) {
+	this.slide = slide;
+	function slide(event) {
 	    var delta = 1;
 	    if (event.direction == "right") {
 		delta = -1;
 	    }
 
 	    wordSettings.currentIndex += delta;
+
 	    document.getElementById('progressBar').value = wordSettings.currentIndex;
 	    if (wordSettings.currentIndex == wordSettings.words.length) {
 		controlButton.click();
@@ -256,10 +293,17 @@ function setupToggleButtons() {
 			.getWord(wordSettings.currentIndex));
 	    }
 	}
+	this.slid = slid;
+	function slid(){
+	    if(wordSettings.sound) {
+		wordSettings.playWordSound();
+	    }
+	}
     }
     var wordSettings = new wordSettings();
 
-    $('.carousel').on('slide', wordSettings.slid);
+    $('.carousel').on('slide', wordSettings.slide);
+    $('.carousel').on('slid', wordSettings.slid);
 
     wordSettings.loadWords = function() {
 	$.getScript('script/' + wordSettings.language + '/words.js').done(
@@ -301,8 +345,14 @@ function setupToggleButtons() {
     toggleFunction(shuffleButton, wordSettings.toggleShuffle,
 	    wordSettings.toggleShuffle);
     var soundButton = document.getElementById('soundButton');
-    toggleFunction(soundButton, wordSettings.toggleSound,
+    if(hasAudioSupport()) {
+	toggleFunction(soundButton, wordSettings.toggleSound,
 	    wordSettings.toggleSound);
+	}
+    else {
+	soundButton.classList.add('hidden');
+	}
+    
     var settingsButton = document.getElementById('settingsButton');
     var settingsPage = document.getElementById('settings');
     settingsButton.onclick = function() {
@@ -457,9 +507,6 @@ $(document).ready(function() {
     $('.carousel').swipe( {
 	    swipeLeft: function() {
 	        $(this).carousel('next');
-	    },
-	    swipeRight: function() {
-	        $(this).carousel('prev');
 	    },
 	    allowPageScroll: 'vertical'
 	});
