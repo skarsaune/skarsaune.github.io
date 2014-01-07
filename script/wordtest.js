@@ -70,6 +70,8 @@ function sizeWordsToWindow() {
     if (wordStyle == null) {
 	wordStyle = findStyle("words", "div.itemBox");
     }
+    if(wordStyle == null)//old ie versions, give up!
+	return;
 
     var sizeFactor = wordSizeFactor();
 
@@ -151,7 +153,7 @@ function encodeWord(word) {
     }
     var codeString = '';
     for ( var i = 0; i < word.length; i++) {
-	if ("aeiouy".indexOf(word[i]) != -1 || word[i] === 'æ' || word[i] === 'ø' || word[i] === 'å') {
+	if ("aeiouyæøå".indexOf(word[i]) != -1 ) {
 	    codeString += '<span class="vowel">' + word[i] + '</span>';
 	} else if (word[i] == '-') {
 	    codeString += '<span class="syllableSeparator">-</span>'
