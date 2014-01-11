@@ -4,7 +4,8 @@
 <meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="GPL licensed site to train reading common words">
+<meta name="description"
+	content="GPL licensed site to train reading common words">
 <title>Ordtrening</title>
 <meta name="author" content="martin.skarsaune@kantega.no">
 
@@ -22,7 +23,8 @@
 	<script src="./script/jquery.touchSwipe.min.js" type="text/javascript"></script>
 	<script src="./script/bootstrap.min.js" type="text/javascript"></script>
 	<script src="./script/underscore.min.js" type="text/javascript"></script>
-	<script src="./script/wordtest.js" type="text/javascript" charset="utf-8"></script>
+	<script src="./script/wordtest.js" type="text/javascript"
+		charset="utf-8"></script>
 
 
 	<div id="myCarousel" class="carousel slide handwriting fillSpace">
@@ -40,8 +42,8 @@
 			</div>
 		</div>
 		<!-- Carousel nav -->
-		 <a class="carousel-control right"
-			id="rightArrow" href="#myCarousel" data-slide="next">&rsaquo;</a>
+		<a class="carousel-control right" id="rightArrow" href="#myCarousel"
+			data-slide="next">&rsaquo;</a>
 		<div id="buttonRow" class="row">
 			<button type="button" id="vowelButton" class="rowButton"
 				title="fargelegg vokaler">
@@ -102,9 +104,9 @@
 					<title>hjelp</title>
 					<circle cx="10" cy="10" r="7" stroke="white" stroke-width="4"
 						fill="none" /> <rect x="9" y="1" width="2" height="4" fill="red"
-						stroke="none" /> <rect x="9" y="1" width="2" height="4" fill="red"
-						stroke="none" transform="rotate(45,10,10)" /> <rect x="9" y="1"
-						width="2" height="4" fill="red" stroke="none"
+						stroke="none" /> <rect x="9" y="1" width="2" height="4"
+						fill="red" stroke="none" transform="rotate(45,10,10)" /> <rect
+						x="9" y="1" width="2" height="4" fill="red" stroke="none"
 						transform="rotate(90,10,10)" /> <rect x="9" y="1" width="2"
 						height="4" fill="red" stroke="none" transform="rotate(135,10,10)" />
 					<rect x="9" y="1" width="2" height="4" fill="red" stroke="none"
@@ -170,15 +172,16 @@
 						transform="rotate(270,10,10)" /></span>
 			</button>
 			<audio id="player" class="player"> <source id="ogg_src"
-				src="" type="audio/ogg" /> <source
-				id="mp3_src" src="" type="audio/mp3" /> Your
-			browser does not support the audio element. </audio>
+				src="" type="audio/ogg" /> <source id="mp3_src" src=""
+				type="audio/mp3" /> Your browser does not support the audio
+			element. </audio>
 
 
 		</div>
 	</div>
 
-	<div id="settings" class="hidden fillSpace inFront cover">
+	<div id="settings" class="hidden space fillSpace inFront cover">
+	    <h1>Innstillinger</h1>
 		<span class="prompt">Fra ord nummer</span><input type="range"
 			id="startSlider" value="1" class="slider" /><input type="number"
 			id="startValue" size="3" class="sliderValue" min="1" max="100"
@@ -192,12 +195,15 @@
 			class="slider" /><input type="number" id="speedValue" size="1"
 			max="5" min="1" step="1" class="sliderValue" /><span id="speed"
 			class="informationLabel">sekunder</span> <br>
-		<button id="saveSettings">Lagre</button>
-		<button id="cancelSettings" onclick="hideSettingsPage();">Avbryt</button>
+		<p class="buttons">
+			<button class="information btn-large" id="saveSettings">Lagre</button>
+			<button class="information btn-large" id="cancelSettings"
+				onclick="hideSettingsPage();">Avbryt</button>
+		</p>
 	</div>
 
 
-	<div id="help" class="hidden fillSpace inFront cover">
+	<div id="help" class="hidden space fillSpace inFront cover">
 		<h1>Hjelp og informasjon</h1>
 		<h2>Bidragsytere og betingelser</h2>
 		<p>Ordlisten er utarbeidet av logoped Randi Orten.</p>
@@ -229,8 +235,8 @@
 		<p>Applikasjonen styres av knapperaden nederst. Knappen i midten
 			benyttes til å starte og pause ordene. Siden kan lastes på nytt for å
 			begynne fra starten. Knappen lengst til venstre brukes for å slå
-			markering av vokaler av og på. Neste knapp benyttes for å slå deling i
-			stavelser av og på. Neste knapp kan brukes for å bytte mellom
+			markering av vokaler av og på. Neste knapp benyttes for å slå deling
+			i stavelser av og på. Neste knapp kan brukes for å bytte mellom
 			forskjelllige skrifttyper. De 3 modi som støttes er: løkkeskrift,
 			trykkbokstaver og store bokstaver. Knappen med to piler viser om
 			ordene kommer i sin vanlige rekkefølge eller tilfeldig.
@@ -241,9 +247,10 @@
 
 
 
-
-		<button id="closeHelp"
-			onclick="document.getElementById('help').classList.add('hidden');">Tilbake</button>
+		<p class="buttons">
+			<button class="information btn-large" id="closeHelp"
+				onclick="document.getElementById('help').classList.add('hidden');">Tilbake</button>
+		</p>
 	</div>
 
 

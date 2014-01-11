@@ -213,3 +213,22 @@ span.informationLabel {
 	margin: 10px;
 	font-size: 24pt;
 }
+
+button.information {
+	background-image: linear-gradient(to bottom, white, rgb(20, 66, 86));
+	color: white; 
+}
+
+div.space {
+	padding-left: 10%;
+	padding-right: 10%;
+	vertical-align: middle;
+}
+
+h1 {
+	text-align: center;
+}
+
+p.buttons {
+	text-align: center;
+}
