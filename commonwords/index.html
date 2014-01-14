@@ -180,8 +180,8 @@
 		</div>
 	</div>
 
-	<div id="settings" class="hidden space fillSpace inFront cover">
-	    <h1>Innstillinger</h1>
+	<div id="settings" class="hidden space fillSpace inFront cover modal">
+		<h1>Innstillinger</h1>
 		<span class="prompt">Fra ord nummer</span><input type="range"
 			id="startSlider" value="1" class="slider" /><input type="number"
 			id="startValue" size="3" class="sliderValue" min="1" max="100"
@@ -203,54 +203,56 @@
 	</div>
 
 
-	<div id="help" class="hidden space fillSpace inFront cover">
-		<h1>Hjelp og informasjon</h1>
-		<h2>Bidragsytere og betingelser</h2>
-		<p>Ordlisten er utarbeidet av logoped Randi Orten.</p>
-		<p>
-			All kildekode er lisensiert under <a
-				href="http://www.gnu.org/copyleft/gpl.html">GNU public license
-				versjon 3</a>. Det betyr at hvem som helst kan laste ned, dele og
-			forbedre løsningen, så lenge den fortsatt distribueres under samme
-			lisens.
-		</p>
-		<p>
-			Innhold er opprinnelig utviklet av <a
-				href="mailto:martin.skarsaune@kantega.no">Martin Skarsaune</a> i <a
-				href="http://www.kantega.no">Kantega AS</a>.
-		</p>
-		<p>Ordene er lest inn av Andreas Yen Skarsaune lisensiert under
-			Create Commons ...</p>
-		<p>
-			jQuery er lisensiert under <a
-				href="https://github.com/jquery/jquery/blob/master/MIT-LICENSE.txt">MIT
-				lisens</a>.
-		</p>
-		<p>
-			Twitter bootstrap er lisensiert under <a
-				href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0
-				lisens</a>.
-		</p>
-		<h2>Hjelp</h2>
-		<p>Applikasjonen styres av knapperaden nederst. Knappen i midten
-			benyttes til å starte og pause ordene. Siden kan lastes på nytt for å
-			begynne fra starten. Knappen lengst til venstre brukes for å slå
-			markering av vokaler av og på. Neste knapp benyttes for å slå deling
-			i stavelser av og på. Neste knapp kan brukes for å bytte mellom
-			forskjelllige skrifttyper. De 3 modi som støttes er: løkkeskrift,
-			trykkbokstaver og store bokstaver. Knappen med to piler viser om
-			ordene kommer i sin vanlige rekkefølge eller tilfeldig.
+	<div id="help" class="hidden space fillSpace inFront cover modal">
+		<div class="content">
+			<h1>Hjelp og informasjon</h1>
+			<h2>Bidragsytere og betingelser</h2>
+			<p>Ordlisten er utarbeidet av logoped Randi Orten.</p>
+			<p>
+				All kildekode er lisensiert under <a
+					href="http://www.gnu.org/copyleft/gpl.html">GNU public license
+					versjon 3</a>. Det betyr at hvem som helst kan laste ned, dele og
+				forbedre løsningen, så lenge den fortsatt distribueres under samme
+				lisens.
+			</p>
+			<p>
+				Innhold er opprinnelig utviklet av <a
+					href="mailto:martin.skarsaune@kantega.no">Martin Skarsaune</a>.
+			</p>
+			<p>Ordene er lest inn av Andreas Yen Skarsaune lisensiert under
+				Create Commons ...</p>
+			<p>
+				jQuery er lisensiert under <a
+					href="https://github.com/jquery/jquery/blob/master/MIT-LICENSE.txt">MIT
+					lisens</a>.
+			</p>
+			<p>
+				Twitter bootstrap er lisensiert under <a
+					href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0
+					lisens</a>.
+			</p>
+			<h2>Hjelp</h2>
+			<p>Applikasjonen styres av knapperaden nederst. Knappen i midten
+				benyttes til å starte og pause ordene. Siden kan lastes på nytt for
+				å begynne fra starten. Knappen lengst til venstre brukes for å slå
+				markering av vokaler av og på. Neste knapp benyttes for å slå deling
+				i stavelser av og på. Neste knapp kan brukes for å bytte mellom
+				forskjelllige skrifttyper. De 3 modi som støttes er: løkkeskrift,
+				trykkbokstaver og store bokstaver. Knappen med to piler viser om
+				ordene kommer i sin vanlige rekkefølge eller tilfeldig.
 
-			Tannhjulsymbolet kan velges for å åpne flere instillinger. Her kan
-			man sette hastighet i sekunder, samt hvilket utvalg ord en ønsker å
-			trene på.</p>
+				Tannhjulsymbolet kan velges for å åpne flere instillinger. Her kan
+				man sette hastighet i sekunder, samt hvilket utvalg ord en ønsker å
+				trene på.</p>
 
+		</div>
 
-
-		<p class="buttons">
-			<button class="information btn-large" id="closeHelp"
-				onclick="document.getElementById('help').classList.add('hidden');">Tilbake</button>
-		</p>
+		<div class="buttonRow">
+			<p class="buttons">
+				<button class="information btn-large" id="closeHelp"
+					onclick="document.getElementById('help').classList.add('hidden');">Tilbake til applikasjonen</button>
+			</p>
+		</div>
 	</div>
 
 

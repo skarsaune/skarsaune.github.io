@@ -65,7 +65,7 @@ div.visible {
 	display: block;
 }
 .cover {
-	background-image: url('../img/papp.jpg');
+
 	color: #146478;
 }
 
@@ -227,8 +227,35 @@ div.space {
 
 h1 {
 	text-align: center;
+	margin-top: 25px;
+}
+
+h2 {
+	margin-top: 10px;
 }
 
 p.buttons {
 	text-align: center;
+}
+
+div.content {
+	position: absolute;
+	height: 70%;
+	width: 80%;
+}
+
+div.buttonRow {
+	position: absolute;
+	top: 70%;
+	width: 80%;
+	text-align: center;
+}
+
+div.modal {
+	background-color: white;
+}
+
+body {
+	font-size: 12pt;
+	background-image: url('../img/papp.jpg');
 }

@@ -243,14 +243,14 @@ function setupToggleButtons() {
 	
 	this.playWordSound = playWordSound;
 	function playWordSound() {
-	    var audio = $('.player'); 
+	    var audio = document.getElementById('player'); 
 	    var word = this.getWord(this.currentIndex);
 	    document.getElementById("mp3_src").setAttribute("src", "media/" + this.language + "/" + word + ".mp3"  )
 	    document.getElementById("ogg_src").setAttribute("src", "media/" + this.language + "/" + word + ".ogg"  )
 	    /** ************* */
-	    audio[0].pause();
-	    audio[0].load();
-	    audio[0].play();
+	    audio.pause();
+	    audio.load();
+	    audio.play();
 	    /** ************* */
 	}
 
