@@ -14,7 +14,7 @@ function wordSizeFactor() {
 
 function hasAudioSupport() {
 	var audioPlayer=document.getElementById('player');
-	return !!(audioPlayer.canPlayType && audioPlayer.canPlayType('audio/mpeg;').replace(/no/, ''));
+	return !!(audioPlayer.canPlayType && (audioPlayer.canPlayType('audio/mpeg;').replace(/no/, '') || audioPlayer.canPlayType('audio/ogg;').replace(/no/, '')));
 }
 
 
@@ -245,7 +245,8 @@ function setupToggleButtons() {
 	function playWordSound() {
 	    var audio = $('.player'); 
 	    var word = this.getWord(this.currentIndex);
-	    audio[0].setAttribute("src", "media/" + this.language + "/" + word + ".mp3"  );
+	    document.getElementById("mp3_src").setAttribute("src", "media/" + this.language + "/" + word + ".mp3"  )
+	    document.getElementById("ogg_src").setAttribute("src", "media/" + this.language + "/" + word + ".ogg"  )
 	    /** ************* */
 	    audio[0].pause();
 	    audio[0].load();
