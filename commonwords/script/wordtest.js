@@ -17,6 +17,16 @@ function hasAudioSupport() {
 	return !!(audioPlayer.canPlayType && (audioPlayer.canPlayType('audio/mpeg;').replace(/no/, '') || audioPlayer.canPlayType('audio/ogg;').replace(/no/, '')));
 }
 
+function pauseCarousel() {
+  $('.carousel').carousel('pause');
+}
+
+function pause() {
+    pauseCarousel();
+    document.getElementById('controlButton').classList.remove('on');
+    
+}
+
 
 function requestFullscreenFunction() {
     if (document.body.webkitRequestFullScreen) {
@@ -342,7 +352,7 @@ function setupToggleButtons() {
     toggleFunction(controlButton, function() {
 	$('.carousel').carousel('cycle');
     }, function() {
-	$('.carousel').carousel('pause');
+	pause();
     });
     var shuffleButton = document.getElementById('shuffleButton');
     toggleFunction(shuffleButton, wordSettings.toggleShuffle,
@@ -359,11 +369,13 @@ function setupToggleButtons() {
     var settingsButton = document.getElementById('settingsButton');
     var settingsPage = document.getElementById('settings');
     settingsButton.onclick = function() {
+	pause();
 	settingsPage.classList.remove('hidden');
     };
     var helpButton = document.getElementById('helpButton');
     var helpPage = document.getElementById('help');
     helpButton.onclick = function() {
+	pause();
 	helpPage.classList.remove('hidden');
     };
     var fullscreenButton = document.getElementById('fullscreenButton');
