@@ -378,12 +378,14 @@ function setupToggleButtons() {
     var settingsPage = document.getElementById('settings');
     settingsButton.onclick = function() {
 	wordSettings.pause();
+	settingsButton.classList.remove('on');
 	settingsPage.classList.remove('hidden');
     };
     var helpButton = document.getElementById('helpButton');
     var helpPage = document.getElementById('help');
     helpButton.onclick = function() {
 	wordSettings.pause();
+	helpButton.classList.remove('on');
 	helpPage.classList.remove('hidden');
     };
     var fullscreenButton = document.getElementById('fullscreenButton');
