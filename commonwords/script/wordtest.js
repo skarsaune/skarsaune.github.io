@@ -13,20 +13,21 @@ function wordSizeFactor() {
 }
 
 function hasAudioSupport() {
-	var audioPlayer=document.getElementById('player');
-	return !!(audioPlayer.canPlayType && (audioPlayer.canPlayType('audio/mpeg;').replace(/no/, '') || audioPlayer.canPlayType('audio/ogg;').replace(/no/, '')));
+    var audioPlayer = document.getElementById('player');
+    return !!(audioPlayer.canPlayType && (audioPlayer
+	    .canPlayType('audio/mpeg;').replace(/no/, '') || audioPlayer
+	    .canPlayType('audio/ogg;').replace(/no/, '')));
 }
 
 function pauseCarousel() {
-  $('.carousel').carousel('pause');
+    $('.carousel').carousel('pause');
 }
 
 function pause() {
     pauseCarousel();
     document.getElementById('controlButton').classList.remove('on');
-    
-}
 
+}
 
 function requestFullscreenFunction() {
     if (document.body.webkitRequestFullScreen) {
@@ -68,7 +69,7 @@ function cancelFullscreen() {
 	document.webkitCancelFullScreen();
     }
 
-    if(document.exitFullscreen) {
+    if (document.exitFullscreen) {
 	document.exitFullscreen();
     }
     sizeButtonsToWindow();
@@ -80,7 +81,7 @@ function sizeWordsToWindow() {
     if (wordStyle == null) {
 	wordStyle = findStyle("words", "div.itemBox");
     }
-    if(wordStyle == null)//old ie versions, give up!
+    if (wordStyle == null)// old ie versions, give up!
 	return;
 
     var sizeFactor = wordSizeFactor();
@@ -120,21 +121,15 @@ function findStyle(styleSheet, selector) {
 }
 
 function calculateHeight() {
-    return Math.max(
-	        $(document).height(),
-	        $(window).height(),
-	        /* For opera: */
-	        document.documentElement.clientHeight
-	    ) + screen.availHeight - screen.height;
+    return Math.max($(document).height(), $(window).height(),
+    /* For opera: */
+    document.documentElement.clientHeight) + screen.availHeight - screen.height;
 }
 
 function calculateWidth() {
-    return Math.max(
-	        $(document).width(),
-	        $(window).width(),
-	        /* For opera: */
-	        document.documentElement.clientWidth
-	    )  + screen.availWidth - screen.width;
+    return Math.max($(document).width(), $(window).width(),
+    /* For opera: */
+    document.documentElement.clientWidth) + screen.availWidth - screen.width;
 }
 
 function hideSettingsPage() {
@@ -156,14 +151,13 @@ function setMaxLenght(anArray) {
     }
 }
 
-
 function encodeWord(word) {
-    if(!word) {
+    if (!word) {
 	return "";
     }
     var codeString = '';
     for ( var i = 0; i < word.length; i++) {
-	if ("aeiouyæøå".indexOf(word[i]) != -1 ) {
+	if ("aeiouyæøå".indexOf(word[i]) != -1) {
 	    codeString += '<span class="vowel">' + word[i] + '</span>';
 	} else if (word[i] == '-') {
 	    codeString += '<span class="syllableSeparator">-</span>'
@@ -191,6 +185,17 @@ function setupToggleButtons() {
 	this.currentIndex = 0;
 	this.carouselIndex = 0;
 	this.carouselItems = document.getElementsByClassName('item');
+	$('.carousel').carousel('pause');
+	this.carousel = $('.carousel').data('bs.carousel');
+	this.pause = pause;
+	function pause() {
+	    this.carousel.pause();
+	}
+
+	this.start = start;
+	function start() {
+	    this.carousel.cycle();
+	}
 
 	this.initSettings = initSettings;
 	function initSettings() {
@@ -213,7 +218,6 @@ function setupToggleButtons() {
 	    document.getElementById('endValue').setAttribute("step", step);
 	    document.getElementById('endSlider').setAttribute("step", step);
 
-	    
 	    document.getElementById('speedSlider').value = this.interval;
 	    document.getElementById('speedValue').value = this.interval;
 
@@ -250,13 +254,15 @@ function setupToggleButtons() {
 
 	    this.initSettings();
 	}
-	
+
 	this.playWordSound = playWordSound;
 	function playWordSound() {
-	    var audio = document.getElementById('player'); 
+	    var audio = document.getElementById('player');
 	    var word = this.getWord(this.currentIndex);
-	    document.getElementById("mp3_src").setAttribute("src", "media/" + this.language + "/" + word + ".mp3"  )
-	    document.getElementById("ogg_src").setAttribute("src", "media/" + this.language + "/" + word + ".ogg"  )
+	    document.getElementById("mp3_src").setAttribute("src",
+		    "media/" + this.language + "/" + word + ".mp3")
+	    document.getElementById("ogg_src").setAttribute("src",
+		    "media/" + this.language + "/" + word + ".ogg")
 	    /** ************* */
 	    audio.pause();
 	    audio.load();
@@ -264,16 +270,14 @@ function setupToggleButtons() {
 	    /** ************* */
 	}
 
-	
-	
-
 	this.updateSettings = updateSettings;
 	function updateSettings() {
 	    this.firstWord = document.getElementById('startSlider').value - 1;
 	    this.lastWord = document.getElementById('endSlider').value - 1;
 	    this.interval = document.getElementById('speedSlider').value;
 	    var inMillis = this.interval * 1000;
-	    $('.carousel').carousel({ interval: inMillis} );
+	    this.carousel.options.interval = inMillis;
+	    this.carousel.options.pause = "no";
 	    if (this.currentIndex < this.firstWord) {
 		this.currentIndex = this.firstWord;
 	    }
@@ -294,29 +298,34 @@ function setupToggleButtons() {
 		delta = -1;
 	    }
 
-	    wordSettings.currentIndex += delta;
 
-	    document.getElementById('progressBar').value = wordSettings.currentIndex;
-	    if (wordSettings.currentIndex == wordSettings.words.length) {
+	    this.currentIndex += delta;
+
+	    document.getElementById('progressBar').value = this.currentIndex;
+	    if (this.currentIndex == this.words.length) {
 		controlButton.click();
 	    } else {
-		wordSettings.carouselIndex = (wordSettings.carouselIndex + delta)
-			% wordSettings.carouselItems.length;
-		wordSettings.carouselItems[wordSettings.carouselIndex].innerHTML = encodeWord(wordSettings
-			.getWord(wordSettings.currentIndex));
+		this.carouselIndex = (this.carouselIndex + delta)
+			% this.carouselItems.length;
+		this.carouselItems[this.carouselIndex].innerHTML = encodeWord(this
+			.getWord(this.currentIndex));
 	    }
 	}
 	this.slid = slid;
-	function slid(){
-	    if(wordSettings.sound) {
-		wordSettings.playWordSound();
+	function slid() {
+	    if (this.sound) {
+		this.playWordSound();
 	    }
 	}
     }
     var wordSettings = new wordSettings();
 
-    $('.carousel').on('slide', wordSettings.slide);
-    $('.carousel').on('slid', wordSettings.slid);
+    $('.carousel').on('slide.bs.carousel', function(event) {
+	wordSettings.slide(event);
+    });
+    $('.carousel').on('slid.bs.carousel', function() {
+	wordSettings.slid();
+    });
 
     wordSettings.loadWords = function() {
 	$.getScript('script/' + wordSettings.language + '/words.js').done(
@@ -350,51 +359,48 @@ function setupToggleButtons() {
     createStyleClassCarousel(fontButton, carouselContainer, [ 'handwriting',
 	    'print', 'printCaps' ]);
     toggleFunction(controlButton, function() {
-	$('.carousel').carousel('cycle');
+	wordSettings.start();
     }, function() {
-	pause();
+	wordSettings.pause();
     });
     var shuffleButton = document.getElementById('shuffleButton');
     toggleFunction(shuffleButton, wordSettings.toggleShuffle,
 	    wordSettings.toggleShuffle);
     var soundButton = document.getElementById('soundButton');
-    if(hasAudioSupport()) {
+    if (hasAudioSupport()) {
 	toggleFunction(soundButton, wordSettings.toggleSound,
-	    wordSettings.toggleSound);
-	}
-    else {
+		wordSettings.toggleSound);
+    } else {
 	soundButton.classList.add('hidden');
-	}
-    
+    }
+
     var settingsButton = document.getElementById('settingsButton');
     var settingsPage = document.getElementById('settings');
     settingsButton.onclick = function() {
-	pause();
+	wordSettings.pause();
 	settingsPage.classList.remove('hidden');
     };
     var helpButton = document.getElementById('helpButton');
     var helpPage = document.getElementById('help');
     helpButton.onclick = function() {
-	pause();
+	wordSettings.pause();
 	helpPage.classList.remove('hidden');
     };
     var fullscreenButton = document.getElementById('fullscreenButton');
     var fullscreenFunction = requestFullscreenFunction();
     if (fullscreenButton) {
 	var state = false;
-	
-	setupFullscreenCallback(function(fullScreenElement) {
-		if (fullScreenElement) {
-		    fullscreenButton.classList.add('on');
-		    state = true;
-		}
-		else {
-		    fullscreenButton.classList.remove('on');
-		    state = false;
-		}
-		    
 
-	    });
+	setupFullscreenCallback(function(fullScreenElement) {
+	    if (fullScreenElement) {
+		fullscreenButton.classList.add('on');
+		state = true;
+	    } else {
+		fullscreenButton.classList.remove('on');
+		state = false;
+	    }
+
+	});
 	if (fullscreenFunction) {
 	    fullscreenButton.onclick = function() {
 
@@ -405,8 +411,7 @@ function setupToggleButtons() {
 		}
 
 	    }
-	}
-	else {
+	} else {
 	    fullscreenButton.classList.add('hidden');
 	}
 
@@ -437,15 +442,17 @@ function setupToggleButtons() {
 	endWord.innerHTML = '(' + wordSettings.getWord(value - 1) + ')';
     };
     synchronize(endSlider, endValue, onEndChange);
-    
-    synchronize(document.getElementById('speedSlider'), document.getElementById('speedValue'), function(value){});
+
+    synchronize(document.getElementById('speedSlider'), document
+	    .getElementById('speedValue'), function(value) {
+    });
 
     var saveSettingsButton = document.getElementById('saveSettings');
-    saveSettingsButton.onclick = wordSettings.updateSettings;
+    saveSettingsButton.onclick = function() {
+	wordSettings.updateSettings();
+    };
 
 }
-
-
 
 function isVowel(character) {
     return false;
@@ -519,12 +526,12 @@ $(document).ready(function() {
     setupToggleButtons();
     sizeWordsToWindow();
     sizeButtonsToWindow();
-    $('.carousel').swipe( {
-	    swipeLeft: function() {
-	        $(this).carousel('next');
-	    },
-	    allowPageScroll: 'vertical'
-	});
+    $('.carousel').swipe({
+	swipeLeft : function() {
+	    $(this).carousel('next');
+	},
+	allowPageScroll : 'vertical'
+    });
 
 });
 // Resize words on window resize
