@@ -278,9 +278,11 @@ function setupToggleButtons() {
 	    this.firstWord = document.getElementById('startSlider').value - 1;
 	    this.lastWord = document.getElementById('endSlider').value - 1;
 	    this.interval = document.getElementById('speedSlider').value;
+	    document.getElementById('progressBar').max = this.lastWord;
+	    document.getElementById('progressBar').min = this.firstWord;
 	    var inMillis = this.interval * 1000;
 	    this.carousel.options.interval = inMillis;
-	    this.carousel.options.pause = "no";
+	    this.carousel.options.pause = "no"; //prevent carousel from stopping on mouse enter
 	    if (this.currentIndex < this.firstWord) {
 		this.currentIndex = this.firstWord;
 	    }
@@ -304,7 +306,8 @@ function setupToggleButtons() {
 	    this.currentIndex += delta;
 
 	    document.getElementById('progressBar').value = this.currentIndex;
-	    if (this.currentIndex == this.words.length) {
+	    if (this.currentIndex == (this.lastWord)) {
+		//stop animation 
 		controlButton.click();
 	    } else {
 		this.carouselIndex = (this.carouselIndex + delta)
