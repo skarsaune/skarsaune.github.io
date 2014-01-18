@@ -187,14 +187,17 @@ function setupToggleButtons() {
 	this.carouselItems = document.getElementsByClassName('item');
 	$('.carousel').carousel('pause');
 	this.carousel = $('.carousel').data('bs.carousel');
+	this.running = false;
 	this.pause = pause;
 	function pause() {
 	    this.carousel.pause();
+	    this.running = false;
 	}
 
 	this.start = start;
 	function start() {
 	    this.carousel.cycle();
+	    this.running = true;
 	}
 
 	this.initSettings = initSettings;
@@ -298,7 +301,6 @@ function setupToggleButtons() {
 		delta = -1;
 	    }
 
-
 	    this.currentIndex += delta;
 
 	    document.getElementById('progressBar').value = this.currentIndex;
@@ -377,15 +379,17 @@ function setupToggleButtons() {
     var settingsButton = document.getElementById('settingsButton');
     var settingsPage = document.getElementById('settings');
     settingsButton.onclick = function() {
-	wordSettings.pause();
-	settingsButton.classList.remove('on');
+	if(wordSettings.running){
+	    controlButton.click();
+	}
 	settingsPage.classList.remove('hidden');
     };
     var helpButton = document.getElementById('helpButton');
     var helpPage = document.getElementById('help');
     helpButton.onclick = function() {
-	wordSettings.pause();
-	helpButton.classList.remove('on');
+	if(wordSettings.running){
+	    controlButton.click();
+	}
 	helpPage.classList.remove('hidden');
     };
     var fullscreenButton = document.getElementById('fullscreenButton');
