@@ -242,6 +242,7 @@ div.content {
 	position: absolute;
 	height: 70%;
 	width: 80%;
+	overflow: auto;
 }
 
 div.buttonRow {

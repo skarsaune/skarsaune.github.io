@@ -307,10 +307,14 @@ function setupToggleButtons() {
 
 	    document.getElementById('progressBar').value = this.currentIndex;
 	    if (this.currentIndex == (this.lastWord)) {
-		//stop animation 
-		controlButton.click();
+		if(this.running) {
+		    //cannot stop carousel within event loop, do so in separate timeout
+		    setTimeout(function(){controlButton.click();}
+		  , 0);
+		    
+		}
 	    } else {
-		this.carouselIndex = (this.carouselIndex + delta)
+		this.carouselIndex = this.currentIndex
 			% this.carouselItems.length;
 		this.carouselItems[this.carouselIndex].innerHTML = encodeWord(this
 			.getWord(this.currentIndex));
