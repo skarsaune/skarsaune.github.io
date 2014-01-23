@@ -224,7 +224,7 @@ function setupToggleButtons() {
 	    document.getElementById('speedSlider').value = this.interval;
 	    document.getElementById('speedValue').value = this.interval;
 
-	    document.getElementById('progressBar').setAttribute("max", max);
+	    document.getElementById('progressBar').setAttribute("max", max - this.firstWord);
 
 	    for ( var i = 0; i < this.carouselItems.length; i++) {
 		this.carouselItems[i].innerHTML = encodeWord(this.words[this.currentIndex
@@ -298,19 +298,19 @@ function setupToggleButtons() {
 
 	this.slide = slide;
 	function slide(event) {
-	    var delta = 1;
-	    if (event.direction == "right") {
-		delta = -1;
-	    }
 
-	    this.currentIndex += delta;
 
-	    document.getElementById('progressBar').value = this.currentIndex;
+	    this.currentIndex ++;
+
+	    
 	    if (this.currentIndex == (this.lastWord)) {
+		this.currentIndex = this.firstWord;
+		
 		if(this.running) {
 		    //cannot stop carousel within event loop, do so in separate timeout
 		    setTimeout(function(){controlButton.click();}
 		  , 0);
+		   
 		    
 		}
 	    } else {
@@ -319,12 +319,21 @@ function setupToggleButtons() {
 		this.carouselItems[this.carouselIndex].innerHTML = encodeWord(this
 			.getWord(this.currentIndex));
 	    }
+	    document.getElementById('progressBar').value = this.currentIndex - this.firstWord;
 	}
 	this.slid = slid;
 	function slid() {
 	    if (this.sound) {
 		this.playWordSound();
 	    }
+	}
+	this.toggleShuffle = toggleShuffle;
+	function toggleShuffle() {
+		this.shuffle = !this.shuffle;
+	}
+	this.toggleSound = toggleSound;    
+	function toggleSound() {
+		this.sound = !this.sound;
 	}
     }
     var wordSettings = new wordSettings();
@@ -346,13 +355,7 @@ function setupToggleButtons() {
 	    wordSettings.setWords([]);
 	});
     };
-    wordSettings.toggleShuffle = function() {
-	wordSettings.shuffle = !wordSettings.shuffle;
-    };
 
-    wordSettings.toggleSound = function() {
-	wordSettings.sound = !wordSettings.sound;
-    };
     wordSettings.loadWords();
 
     var vowelButton = document.getElementById('vowelButton');
@@ -373,12 +376,16 @@ function setupToggleButtons() {
 	wordSettings.pause();
     });
     var shuffleButton = document.getElementById('shuffleButton');
-    toggleFunction(shuffleButton, wordSettings.toggleShuffle,
-	    wordSettings.toggleShuffle);
+    toggleFunction(shuffleButton, function(){wordSettings.toggleShuffle()},
+	    function(){wordSettings.toggleShuffle()});
     var soundButton = document.getElementById('soundButton');
     if (hasAudioSupport()) {
-	toggleFunction(soundButton, wordSettings.toggleSound,
-		wordSettings.toggleSound);
+	toggleFunction(soundButton, function() {
+		wordSettings.toggleSound();
+	    },
+	    function() {
+		wordSettings.toggleSound();
+	    });
     } else {
 	soundButton.classList.add('hidden');
     }
@@ -400,6 +407,8 @@ function setupToggleButtons() {
 	helpPage.classList.remove('hidden');
     };
     var fullscreenButton = document.getElementById('fullscreenButton');
+//    var fullscreenSpan = document.getElementById('fullscreenSvg');
+//    fit(fullscreenButton, fullscreenSpan, {cover: true});
     var fullscreenFunction = requestFullscreenFunction();
     if (fullscreenButton) {
 	var state = false;

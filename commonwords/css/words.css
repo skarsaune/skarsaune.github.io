@@ -240,14 +240,15 @@ p.buttons {
 
 div.content {
 	position: absolute;
-	height: 70%;
+	height: 80%;
 	width: 80%;
 	overflow: auto;
 }
 
 div.buttonRow {
+	padding-top: 2%;
 	position: absolute;
-	top: 70%;
+	top: 80%;
 	width: 80%;
 	text-align: center;
 }
