@@ -3,170 +3,16 @@
  * http://www.gnu.org/copyleft/gpl.html
  * Author: martin.skarsaune@kantega.no
  * 
+ * 
+ * Main script controlling the state of the application
  * */
 
-var wordStyle = null;
-var maxLenght = 10;
 
-function wordSizeFactor() {
-    return Math.min(calculateHeight(), (calculateWidth() * 3) / maxLenght);
-}
 
-function hasAudioSupport() {
-    var audioPlayer = document.getElementById('player');
-    return !!(audioPlayer.canPlayType && (audioPlayer
-	    .canPlayType('audio/mpeg;').replace(/no/, '') || audioPlayer
-	    .canPlayType('audio/ogg;').replace(/no/, '')));
-}
-
-function pauseCarousel() {
-    $('.carousel').carousel('pause');
-}
-
-function pause() {
-    pauseCarousel();
-    document.getElementById('controlButton').classList.remove('on');
-
-}
-
-function requestFullscreenFunction() {
-    if (document.body.webkitRequestFullScreen) {
-	return document.body.webkitRequestFullScreen;
-    }
-    if (document.body.mozRequestFullScreen) {
-	return document.body.mozRequestFullScreen;
-    }
-
-    return document.requestFullscreen;
-
-}
-
-function setupFullscreenCallback(handleFunction) {
-    if (document.body.webkitRequestFullScreen) {
-	document.onwebkitfullscreenchange = function() {
-	    handleFunction(document.webkitCurrentFullScreenElement)
-	};
-    }
-    if (document.body.mozRequestFullScreen) {
-	document.onmozfullscreenchange = function() {
-	    handleFunction(document.mozFullScreenElement)
-	};
-    }
-
-    if (document.requestFullscreen) {
-	document.onfullscreenchange = function() {
-	    handleFunction(document.fullscreenElement)
-	};
-    }
-
-}
-
-function cancelFullscreen() {
-    if (document.webkitCancelFullScreen) {
-	document.webkitCancelFullScreen();
-    }
-    if (document.mozCancelFullScreen) {
-	document.webkitCancelFullScreen();
-    }
-
-    if (document.exitFullscreen) {
-	document.exitFullscreen();
-    }
-    sizeButtonsToWindow();
-    sizeWordsToWindow();
-
-}
-
-function sizeWordsToWindow() {
-    if (wordStyle == null) {
-	wordStyle = findStyle("words", "div.itemBox");
-    }
-    if (wordStyle == null)// old ie versions, give up!
-	return;
-
-    var sizeFactor = wordSizeFactor();
-
-    wordStyle.setProperty("font-size", parseInt(sizeFactor / 1.3) + "px",
-	    "important");
-    wordStyle.setProperty("line-height", calculateHeight() + "px", "important");
-}
-
-var buttonStyle = null;
-function sizeButtonsToWindow() {
-    var sizeFactor = wordSizeFactor();
-    if (!buttonStyle) {
-	buttonStyle = findStyle("words", "button.rowButton");
-    }
-    buttonStyle.setProperty("font-size", parseInt(sizeFactor / 8) + "px",
-	    "important");
-    buttonStyle.setProperty("height", parseInt(sizeFactor / 7) + "px",
-	    "important");
-
-}
-
-function findStyle(styleSheet, selector) {
-    for ( var i = 0; i < document.styleSheets.length; i++) {
-	if (document.styleSheets[i].title === styleSheet) {
-	    var ruleList = document.styleSheets[i].rules
-		    || document.styleSheets[i].cssRules;
-	    for ( var j = 0; j < ruleList.length; j++) {
-		if (ruleList[j] && ruleList[j].selectorText === selector) {
-		    return ruleList[j].style;
-		}
-	    }
-
-	}
-    }
-    return null;
-}
-
-function calculateHeight() {
-    return Math.max($(document).height(), $(window).height(),
-    /* For opera: */
-    document.documentElement.clientHeight) + screen.availHeight - screen.height;
-}
-
-function calculateWidth() {
-    return Math.max($(document).width(), $(window).width(),
-    /* For opera: */
-    document.documentElement.clientWidth) + screen.availWidth - screen.width;
-}
-
-function hideSettingsPage() {
-    document.getElementById('settings').classList.add('hidden');
-}
-function showSettingsPage() {
-    document.getElementById('settings').classList.remove('hidden');
-}
 
 /*
- * Adjust the lenght of longest word if any of the words is longer than the
- * current
+ * Set up callbacks from buttonrow
  */
-function setMaxLenght(anArray) {
-    for ( var i = 0; i < anArray.lenght; i++) {
-	if (anArray[i].lenght > maxLenght) {
-	    maxLenght = anArray[i].length;
-	}
-    }
-}
-
-function encodeWord(word) {
-    if (!word) {
-	return "";
-    }
-    var codeString = '';
-    for ( var i = 0; i < word.length; i++) {
-	if ("aeiouyæøå".indexOf(word[i]) != -1) {
-	    codeString += '<span class="vowel">' + word[i] + '</span>';
-	} else if (word[i] == '-') {
-	    codeString += '<span class="syllableSeparator">-</span>'
-	} else
-	    codeString += word[i];
-    }
-    return codeString;
-}
-
 function setupToggleButtons() {
     var controlButton = document.getElementById('controlButton');
 
@@ -233,6 +79,9 @@ function setupToggleButtons() {
 
 	}
 
+	/*
+	 * Update list of words after reading language word list
+	 */
 	this.setWords = setWords;
 	function setWords(newWords) {
 	    this.words = newWords;
@@ -258,6 +107,9 @@ function setupToggleButtons() {
 	    this.initSettings();
 	}
 
+	/*
+	 * Play sound of word by setting source of audio element
+	 */
 	this.playWordSound = playWordSound;
 	function playWordSound() {
 	    var audio = document.getElementById('player');
@@ -273,6 +125,9 @@ function setupToggleButtons() {
 	    /** ************* */
 	}
 
+	/*
+	 * Apply settings from settings page
+	 */
 	this.updateSettings = updateSettings;
 	function updateSettings() {
 	    this.firstWord = document.getElementById('startSlider').value - 1;
@@ -296,6 +151,9 @@ function setupToggleButtons() {
 		return this.words[index];
 	}
 
+	/*
+	 * Respond to carousel slide, update progress bar. Reset if the end has been reached
+	 */
 	this.slide = slide;
 	function slide(event) {
 
@@ -335,6 +193,19 @@ function setupToggleButtons() {
 	function toggleSound() {
 		this.sound = !this.sound;
 	}
+	
+	this.loadWords=loadWords;
+	function loadWords() {
+		$.getScript('script/' + wordSettings.language + '/words.js').done(
+			function(script, textstatus) {
+			    var words = getAllWords();
+			    setMaxLenght(words);
+			    this.setWords(words);
+			}).fail(function(jqxhr, settings, exception) {
+		    this.setWords([]);
+		});
+	    };
+
     }
     var wordSettings = new wordSettings();
 
@@ -345,16 +216,6 @@ function setupToggleButtons() {
 	wordSettings.slid();
     });
 
-    wordSettings.loadWords = function() {
-	$.getScript('script/' + wordSettings.language + '/words.js').done(
-		function(script, textstatus) {
-		    var words = getAllWords();
-		    setMaxLenght(words);
-		    wordSettings.setWords(words);
-		}).fail(function(jqxhr, settings, exception) {
-	    wordSettings.setWords([]);
-	});
-    };
 
     wordSettings.loadWords();
 
@@ -396,7 +257,7 @@ function setupToggleButtons() {
 	if(wordSettings.running){
 	    controlButton.click();
 	}
-	settingsPage.classList.remove('hidden');
+	showSettingsPage();
     };
     var helpButton = document.getElementById('helpButton');
     var helpPage = document.getElementById('help');
@@ -476,78 +337,11 @@ function setupToggleButtons() {
 
 }
 
-function isVowel(character) {
-    return false;
-}
-
-function synchronize(control1, control2, callback) {
-    control1.onchange = function() {
-	control2.value = control1.value;
-	callback(control1.value);
-    };
-    control2.onchange = function() {
-	control1.value = control2.value;
-	callback(control2.value);
-    };
-
-}
-
-function createStyleClassCarousel(button, container, styles) {
-    if (!button || !container || styles.length === 0) {
-	return;
-    }
-    var index = 0;
-    button.onclick = function() {
-	// remove the former style
-	container.classList.remove(styles[index]);
-	index = ++index % styles.length;
-	// apply the style at next index
-	container.classList.add(styles[index]);
-    }
-}
-
-function toggleFunction(button, toggleOn, toggleOff) {
-
-    if (!button) {
-	return;
-    }
-
-    var state = false;
-    button.onclick = function() {
-	if (state) {
-	    toggleOff();
-	} else {
-	    toggleOn();
-	}
-	button.classList.toggle('on');
-	state = !state;
-    };
-}
-
-function createStyleToggle(button, style, attribute) {
-    // if either button or style is not found abort
-    if (!button || !style) {
-	return;
-    }
-    var state = true;
-    var value = style.getPropertyValue(attribute);
-    button.onclick = function() {
-	if (state) {
-	    style.removeProperty(attribute);
-	    state = false;
-	} else {
-	    style.setProperty(attribute, value, "important");
-	    state = true;
-	}
-    }
-}
-
 // Within your document ready function,
 // Do an initial size of words
 $(document).ready(function() {
     setupToggleButtons();
-    sizeWordsToWindow();
-    sizeButtonsToWindow();
+    sizeContents();
     $('.carousel').swipe({
 	swipeLeft : function() {
 	    $(this).carousel('next');
@@ -558,6 +352,5 @@ $(document).ready(function() {
 });
 // Resize words on window resize
 jQuery(window).resize(function() {
-    sizeWordsToWindow();
-    sizeButtonsToWindow();
+    sizeContents();
 });
