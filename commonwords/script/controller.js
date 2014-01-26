@@ -193,19 +193,6 @@ function setupToggleButtons() {
 	function toggleSound() {
 		this.sound = !this.sound;
 	}
-	
-	this.loadWords=loadWords;
-	function loadWords() {
-		$.getScript('script/' + wordSettings.language + '/words.js').done(
-			function(script, textstatus) {
-			    var words = getAllWords();
-			    setMaxLenght(words);
-			    this.setWords(words);
-			}).fail(function(jqxhr, settings, exception) {
-		    this.setWords([]);
-		});
-	    };
-
     }
     var wordSettings = new wordSettings();
 
@@ -216,6 +203,16 @@ function setupToggleButtons() {
 	wordSettings.slid();
     });
 
+    wordSettings.loadWords = function() {
+	$.getScript('script/' + wordSettings.language + '/words.js').done(
+		function(script, textstatus) {
+		    var words = getAllWords();
+		    setMaxLenght(words);
+		    wordSettings.setWords(words);
+		}).fail(function(jqxhr, settings, exception) {
+	    wordSettings.setWords([]);
+	});
+    };
 
     wordSettings.loadWords();
 
