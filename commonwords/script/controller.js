@@ -225,8 +225,8 @@ function setupToggleButtons() {
     syllableButton.onclick();
     var fontButton = document.getElementById('fontButton');
     var carouselContainer = document.getElementById('myCarousel');
-    createStyleClassCarousel(fontButton, carouselContainer, [ 'handwriting',
-	    'print', 'printCaps' ]);
+    createStyleClassCarousel(fontButton, carouselContainer, ['print', 'handwriting',
+	     'printCaps' ]);
     toggleFunction(controlButton, function() {
 	wordSettings.start();
     }, function() {
