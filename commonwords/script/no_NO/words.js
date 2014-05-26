@@ -83,11 +83,9 @@ function getAllWords(){
 	"el-ler",
 	"før-ste",
 	"en",
-	"dag",
 	"ved",
 	"to",
 	"der",
-	"det",
 	"de",
 	"fikk",
 	"det-te",
@@ -107,8 +105,9 @@ function getAllWords(){
 	"da",
 	"han",
 	"seg",
-	"si-er"
-	
+	"si-er",
+	"men",
+	"nok"
 	];
 	
 } 

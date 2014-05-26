@@ -7,9 +7,6 @@
  * Main script controlling the state of the application
  * */
 
-
-
-
 /*
  * Set up callbacks from buttonrow
  */
@@ -41,7 +38,11 @@ function setupToggleButtons() {
 	}
 
 	this.start = start;
-	function start() {
+	function start() {   //rewind if stopped because end is reached
+	  
+	    if(this.currentIndex == this.lastWord) {
+		this.currentIndex = this.firstWord;
+	    }
 	    this.carousel.cycle();
 	    this.running = true;
 	}
@@ -49,7 +50,7 @@ function setupToggleButtons() {
 	this.initSettings = initSettings;
 	function initSettings() {
 	    var max = this.words.length;
-	    var step = max / 10;
+	    var step = 10;
 	    if (step == 0) {
 		step = 1;
 	    }
@@ -70,8 +71,14 @@ function setupToggleButtons() {
 	    document.getElementById('speedSlider').value = this.interval;
 	    document.getElementById('speedValue').value = this.interval;
 
-	    document.getElementById('progressBar').setAttribute("max", max - this.firstWord);
+	    document.getElementById('progressBar').setAttribute("max",
+		    max - this.firstWord);
 
+	    setupCarouselItems();
+
+	}
+
+	function setupCarouselItems() {
 	    for ( var i = 0; i < this.carouselItems.length; i++) {
 		this.carouselItems[i].innerHTML = encodeWord(this.words[this.currentIndex
 			+ i]);
@@ -133,10 +140,12 @@ function setupToggleButtons() {
 	    this.firstWord = document.getElementById('startSlider').value - 1;
 	    this.lastWord = document.getElementById('endSlider').value - 1;
 	    this.interval = document.getElementById('speedSlider').value;
-	    document.getElementById('progressBar').max = this.lastWord - this.firstWord;
+	    document.getElementById('progressBar').max = this.lastWord
+		    - this.firstWord;
 	    var inMillis = this.interval * 1000;
 	    this.carousel.options.interval = inMillis;
-	    this.carousel.options.pause = "no"; //prevent carousel from stopping on mouse enter
+	    this.carousel.options.pause = "no"; // prevent carousel from
+						// stopping on mouse enter
 	    if (this.currentIndex < this.firstWord) {
 		this.currentIndex = this.firstWord;
 	    }
@@ -151,24 +160,23 @@ function setupToggleButtons() {
 	}
 
 	/*
-	 * Respond to carousel slide, update progress bar. Reset if the end has been reached
+	 * Respond to carousel slide, update progress bar. Reset if the end has
+	 * been reached
 	 */
 	this.slide = slide;
 	function slide(event) {
 
+	    this.currentIndex++;
 
-	    this.currentIndex ++;
-
-	    
 	    if (this.currentIndex == (this.lastWord)) {
-		this.currentIndex = this.firstWord;
-		
-		if(this.running) {
-		    //cannot stop carousel within event loop, do so in separate timeout
-		    setTimeout(function(){controlButton.click();}
-		  , 0);
-		   
-		    
+
+		if (this.running) {
+		    // cannot stop carousel within event loop, do so in separate
+		    // timeout
+		    setTimeout(function() {
+			controlButton.click();
+		    }, 0);
+
 		}
 	    } else {
 		this.carouselIndex = this.currentIndex
@@ -176,21 +184,27 @@ function setupToggleButtons() {
 		this.carouselItems[this.carouselIndex].innerHTML = encodeWord(this
 			.getWord(this.currentIndex));
 	    }
-	    document.getElementById('progressBar').value = this.currentIndex - this.firstWord;
+	    document.getElementById('progressBar').value = this.currentIndex
+		    - this.firstWord;
 	}
 	this.slid = slid;
 	function slid() {
 	    if (this.sound) {
 		this.playWordSound();
 	    }
+//	    if (this.currentIndex == this.lastWord) {// start from beginning
+//							// if we have reached
+//							// the end
+//		this.currentIndex = this.firstWord;
+//	    }
 	}
 	this.toggleShuffle = toggleShuffle;
 	function toggleShuffle() {
-		this.shuffle = !this.shuffle;
+	    this.shuffle = !this.shuffle;
 	}
-	this.toggleSound = toggleSound;    
+	this.toggleSound = toggleSound;
 	function toggleSound() {
-		this.sound = !this.sound;
+	    this.sound = !this.sound;
 	}
     }
     var wordSettings = new wordSettings();
@@ -225,24 +239,26 @@ function setupToggleButtons() {
     syllableButton.onclick();
     var fontButton = document.getElementById('fontButton');
     var carouselContainer = document.getElementById('myCarousel');
-    createStyleClassCarousel(fontButton, carouselContainer, ['print', 'handwriting',
-	     'printCaps' ]);
+    createStyleClassCarousel(fontButton, carouselContainer, [ 'print',
+	    'handwriting', 'printCaps' ]);
     toggleFunction(controlButton, function() {
 	wordSettings.start();
     }, function() {
 	wordSettings.pause();
     });
     var shuffleButton = document.getElementById('shuffleButton');
-    toggleFunction(shuffleButton, function(){wordSettings.toggleShuffle()},
-	    function(){wordSettings.toggleShuffle()});
+    toggleFunction(shuffleButton, function() {
+	wordSettings.toggleShuffle()
+    }, function() {
+	wordSettings.toggleShuffle()
+    });
     var soundButton = document.getElementById('soundButton');
     if (hasAudioSupport()) {
 	toggleFunction(soundButton, function() {
-		wordSettings.toggleSound();
-	    },
-	    function() {
-		wordSettings.toggleSound();
-	    });
+	    wordSettings.toggleSound();
+	}, function() {
+	    wordSettings.toggleSound();
+	});
     } else {
 	soundButton.classList.add('hidden');
     }
@@ -250,7 +266,7 @@ function setupToggleButtons() {
     var settingsButton = document.getElementById('settingsButton');
     var settingsPage = document.getElementById('settings');
     settingsButton.onclick = function() {
-	if(wordSettings.running){
+	if (wordSettings.running) {
 	    controlButton.click();
 	}
 	showSettingsPage();
@@ -258,14 +274,14 @@ function setupToggleButtons() {
     var helpButton = document.getElementById('helpButton');
     var helpPage = document.getElementById('help');
     helpButton.onclick = function() {
-	if(wordSettings.running){
+	if (wordSettings.running) {
 	    controlButton.click();
 	}
 	helpPage.classList.remove('hidden');
     };
     var fullscreenButton = document.getElementById('fullscreenButton');
-//    var fullscreenSpan = document.getElementById('fullscreenSvg');
-//    fit(fullscreenButton, fullscreenSpan, {cover: true});
+    // var fullscreenSpan = document.getElementById('fullscreenSvg');
+    // fit(fullscreenButton, fullscreenSpan, {cover: true});
     var fullscreenFunction = requestFullscreenFunction();
     if (fullscreenButton) {
 	var state = false;
